@@ -1,0 +1,11 @@
+/* Map of the actions (ActionsMap, Leaflet): background and tiles */
+
+/* Map background: the color of the land of the tiles (never the grey of Leaflet while tiles load), and the tiles fade
+   in with the duration of the site */
+.leaflet-container {
+    background: var(--map-bg);
+}
+
+.leaflet-container.leaflet-fade-anim .leaflet-tile {
+    transition: opacity var(--motion-base) var(--ease-enter);
+}

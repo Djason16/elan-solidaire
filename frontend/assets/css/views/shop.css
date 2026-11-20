@@ -1,0 +1,262 @@
+/* Shop pages (components/views/Shop, Product, Cart), styles of the original design. The product page and the
+   checkout have their own files, imported here. */
+@import "shop-product.css";
+@import "shop-buy.css";
+@import "shop-cart.css";
+
+/* Results: "Affichage de 1–10 sur N résultats" and the sort list, then the grid, rising into view */
+.shop-results-section { display: flex; flex-direction: column; }
+
+.shop-results-section > * {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+.shop-results-section.is-visible > * { opacity: 1; transform: translateY(0); }
+
+.shop-results-section.is-visible > :nth-child(1) { transition-delay: 0.0s; }
+.shop-results-section.is-visible > :nth-child(2) { transition-delay: 0.1s; }
+.shop-results-section.is-visible > :nth-child(3) { transition-delay: 0.2s; }
+
+.shop-results-header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--page-gutter) var(--space-8);
+}
+
+.shop-results-header p { margin: 0; }
+
+.shop-results-header mark {
+    background: transparent;
+    color: var(--text-color-grey);
+    font-weight: 600;
+}
+
+.shop-sort { min-width: 0; width: min(100%, 240px); }
+
+.shop-sort select { font-size: var(--font-small); }
+
+/* Grid of product cards: each card rises in turn */
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: var(--grid-gap);
+    min-height: 250px;
+    margin: 0;
+    padding: 0 var(--page-gutter);
+    list-style: none;
+}
+
+.product-item { animation: shop-item-in 0.5s ease both; animation-delay: calc(0.05s + var(--item-index, 0) * 0.05s); }
+
+@keyframes shop-item-in {
+    from { opacity: 0; transform: translateY(20px); }
+}
+
+/* Product card */
+.boutique-item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    line-height: var(--line-height-medium);
+    transition: opacity var(--fast-transition);
+}
+
+/* Out of stock: the picture is greyed, the texts keep their AA contrast (no transparency on them) */
+.boutique-item.out-of-stock .item-image img { filter: grayscale(1); opacity: 0.7; }
+
+.item-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 3px 6px;
+    background: var(--fifth-color-50);
+}
+
+.item-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.stock-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.out-of-stock-badge { background: var(--accent-red); color: var(--text-color-light); }
+
+.low-stock-badge { background: var(--accent-yellow); color: var(--text-color-dark); }
+
+.item-details {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.item-title,
+.item-category {
+    margin: 0;
+    color: var(--text-color-dark);
+    font-weight: 500;
+}
+
+.item-price {
+    margin: 0;
+    color: var(--text-color-grey);
+}
+
+.stock-info {
+    display: flex;
+    align-items: center;
+    margin: var(--space-1) 0 0;
+    color: var(--text-color-grey);
+}
+
+/* Low stock: the text in the dark yellow of the design (the light yellow failed the contrast on white) */
+.stock-info.low-stock { color: #8A6100; font-weight: 600; }
+
+.stock-info.invisible { visibility: hidden; }
+
+.view-product-btn { margin-top: auto; }
+
+/* Pagination: "Précédent", squared numbers, "Suivant" */
+.shop-pagination {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-3);
+    align-items: center;
+    padding: var(--space-8) var(--page-gutter);
+}
+
+.pagination-left { display: flex; justify-content: flex-start; }
+
+.pagination-center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-right { display: flex; justify-content: flex-end; }
+
+.ellipsis {
+    min-width: 24px;
+    color: var(--text-color-grey);
+    text-align: center;
+}
+
+.shop-pagination .page-number-btn {
+    min-width: 48px;
+    min-height: 48px;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+}
+
+.shop-pagination .nav-btn {
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0 var(--space-5);
+}
+
+/* Empty shop, unknown product, empty cart, order paid */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 40vh;
+    padding: var(--space-8) var(--page-gutter);
+    text-align: center;
+}
+
+.empty-state > * {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+.empty-state.is-visible > * { opacity: 1; transform: translateY(0); }
+
+.empty-state.is-visible > :nth-child(2) { transition-delay: 0.1s; }
+.empty-state.is-visible > :nth-child(3) { transition-delay: 0.2s; }
+.empty-state.is-visible > :nth-child(4) { transition-delay: 0.3s; }
+
+.empty-state-icon { color: var(--fifth-color-50); }
+
+.empty-state h1,
+.empty-state h2 {
+    margin: 0;
+    color: var(--text-color-dark);
+    font-weight: 600;
+}
+
+.empty-state p { margin: 0; color: var(--text-color-grey); }
+
+/* Small dark round buttons (quantities, removal) */
+.round-icon-button {
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* On a touch screen the round buttons grow to 28 px (24 px at least, WCAG 2.2 AA) */
+@media (pointer: coarse) {
+    .round-icon-button {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .shop-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: var(--space-6) var(--space-5);
+    gap: var(--grid-gap);
+}
+}
+
+@media (max-width: 768px) {
+    .shop-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: var(--space-6) var(--space-4);
+    gap: var(--grid-gap);
+}
+
+    .shop-pagination { gap: var(--space-2); padding: var(--space-8) var(--page-gutter); }
+
+    .shop-pagination .page-number-btn,
+    .shop-pagination .nav-btn { min-width: 40px; min-height: 40px; }
+
+    .shop-pagination .nav-btn { padding: 0 var(--space-4); }
+}
+
+@media (max-width: 480px) {
+    .shop-results-header { padding: 0 var(--page-gutter) var(--space-8); }
+
+    .shop-grid { grid-template-columns: 1fr; gap: var(--space-6);
+    gap: var(--grid-gap);
+}
+
+    /* Narrow phones: the page numbers on their own line, "Précédent" and "Suivant" under them */
+    .shop-pagination { grid-template-columns: 1fr 1fr; padding: var(--space-7) var(--space-8); }
+
+    .pagination-center { grid-column: 1 / -1; grid-row: 1; }
+
+    .shop-pagination .page-number-btn,
+    .shop-pagination .nav-btn { min-width: 36px; min-height: 36px; }
+
+    .empty-state { padding: var(--space-8) var(--page-gutter); }
+}

@@ -1,0 +1,108 @@
+/* Layout of every form of the site (split from forms.css): one column, --form-gap between blocks */
+
+/* ---------- Form layout: ONE rule for every form of the site ----------
+   A form is a column; each of its blocks (field, group of choices, amounts, check box, help text, buttons) is a
+   direct child with no margin, --form-gap from the next one. Rows of fields and the card of the payment window are
+   columns of the same kind. */
+.support-form,
+.customer-form,
+.admin-form,
+.admin-form-fields,
+.payment,
+.payment-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--form-gap);
+}
+
+:is(.support-form, .customer-form, .admin-form, .admin-form-fields, .payment, .payment-card, .form-row, .cart-form-row, .payment-row) > * {
+    margin: 0;
+}
+
+/* Groups of choices (fieldset): the same structure as a field. The legend floats so it becomes a normal block of the
+   column (a rendered legend ignores the gap); it looks like a label and sits --label-gap above the options */
+fieldset {
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+fieldset.form-group,
+.field-choices,
+.size-picker,
+.payment-fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: var(--label-gap);
+}
+
+div.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--label-gap);
+}
+
+/* Safari ignores the flex gap after the legend of a fieldset (the legend stays glued to the first option): a fieldset
+   is laid out as a normal block instead, which every browser renders the same way. The legend floats over the whole
+   width with --label-gap of padding under it, the next block clears it, and the blocks after are --label-gap apart. */
+fieldset:is(.form-group, .field-choices, .size-picker, .payment-fieldset) {
+    display: block;
+}
+
+fieldset:is(.form-group, .field-choices, .size-picker, .payment-fieldset) > legend + * {
+    clear: both;
+}
+
+fieldset:is(.form-group, .field-choices, .size-picker, .payment-fieldset) > :not(legend) + * {
+    margin-top: var(--label-gap);
+}
+
+:is(fieldset.form-group, .field-choices, .size-picker, .payment-fieldset) > legend {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 0 0 var(--label-gap);
+}
+
+/* Options of a group: the same gap everywhere */
+.radio-group,
+.preset-buttons,
+.payment-methods,
+.size-options {
+    gap: var(--choice-gap);
+}
+
+/* Error state of a block: red border on its field, its box or its options (the message is a toast) */
+.has-error .input-type,
+.has-error .message-type,
+.has-error .checkbox-custom,
+.has-error .radio-item input,
+.has-error .size-option,
+.has-error .payment-button,
+.has-error .preset-button {
+    border-color: var(--accent-red);
+    box-shadow: 0 0 0 1px var(--accent-red);
+}
+
+/* Send button of a form: the same height, padding and corners as the fields above it (whole width with `full`) */
+:where(form) .action-button.squared[type="submit"] {
+    min-height: var(--field-height);
+    padding-block: var(--space-2);
+    border-radius: var(--radius-sm);
+}
+
+/* Date and time fields: Safari on iPhone gives them their own minimum width and look, so a date field (« Né(e) le »)
+   went past the card. They take the width of the column like every other field, with the site's look. */
+.input-type:is([type="date"], [type="time"], [type="datetime-local"], [type="month"]) {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.input-type::-webkit-date-and-time-value {
+    min-height: 1.5em;
+    text-align: left;
+}

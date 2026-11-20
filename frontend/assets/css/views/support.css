@@ -1,0 +1,9 @@
+/*
+ * Pages "Nous soutenir", virement, contact, connexion, espace membre, pages légales and 404, as in the original design.
+ * One file per part, each under 300 lines.
+ */
+@import "support-forms.css";
+@import "support-info.css";
+@import "support-pages.css";
+@import "support-legal.css";
+@import "support-account.css";

@@ -1,0 +1,46 @@
+/* Member space and login page (demo additions, in the language of the original design) */
+.account-content,
+.login-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.account-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.member-card {
+    flex: 1;
+    min-width: 0;
+    align-self: flex-start;
+}
+
+.member-card .impact-list p {
+    margin: 0;
+}
+
+.member-card .action-button {
+    align-self: flex-start;
+}
+
+.account-content .card .data-list {
+    margin: 0;
+}
+
+.demo-accounts-buttons {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.demo-accounts-buttons .action-button {
+    flex: 1 1 14rem;
+}
+
+@media (max-width: 1440px) {
+    .member-card {
+        align-self: stretch;
+    }
+}

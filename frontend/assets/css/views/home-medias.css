@@ -1,0 +1,134 @@
+/* Photos of the home page: horizontal strip with the carousel scrollbar, and the lightbox (original design) */
+
+/* Photos: horizontal strip, hidden native scrollbar, snap */
+.photos-index {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-8);
+    padding: 0 calc(var(--page-gutter) * 2);
+}
+
+.media-grid {
+    display: flex;
+    gap: clamp(var(--space-5), 4vw, var(--space-7));
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    /* Room above and under the photos inside the scrolling strip: shadows, rounded corners, entry movement and the
+       focus ring are no longer cut (overflow-x: auto clips the other axis too) */
+    padding-block: var(--space-3);
+    scroll-padding-inline: var(--focus-offset);
+    /* Each stop lands on a photo; the smooth moves come from the arrows (and stay instant with reduced motion) */
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+}
+
+.media-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.media-item {
+    flex-shrink: 0;
+    width: clamp(140px, 20vw, 250px);
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: clamp(14px, 2vw, 24px);
+    scroll-snap-align: start;
+    opacity: 0;
+    /* Small rise: it stays inside the padding of the strip */
+    transform: translateY(var(--space-3));
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+.media-grid.is-visible .media-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.media-grid.is-visible .media-item:nth-child(2) { transition-delay: 0.1s; }
+.media-grid.is-visible .media-item:nth-child(3) { transition-delay: 0.2s; }
+.media-grid.is-visible .media-item:nth-child(n + 4) { transition-delay: 0.3s; }
+
+.media-button {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: zoom-in;
+}
+
+.media-button img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 1024px) {
+    .photos-index {
+        gap: var(--space-7);
+        padding: 0 var(--page-gutter);
+    }
+}
+
+/* Lightbox: the photo over a dark blurred veil. The dialog itself is the veil and covers the whole screen (the
+   ::backdrop left a band uncovered on phones when the address bar moves): 100lvh, the height with the bar hidden */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    max-width: none;
+    height: 100lvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: none;
+    background: var(--overlay-bg);
+    backdrop-filter: var(--blur);
+}
+
+.lightbox[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox::backdrop {
+    background: transparent;
+}
+
+.lightbox-image {
+    display: block;
+    width: auto;
+    max-width: 90vw;
+    height: auto;
+    max-height: 85dvh;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .lightbox-close {
+        top: 1rem;
+        right: 1rem;
+    }
+}

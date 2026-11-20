@@ -1,0 +1,222 @@
+/* Bottom of every page (Footer), as in the original design */
+.site-footer {
+    position: relative;
+    background-color: var(--third-color);
+    color: var(--text-color-dark);
+}
+
+.footer-top {
+    /* Hover color of the links of the dark footer (components/states.css) */
+    --link-hover-color: var(--accent-green);
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: var(--space-7) calc(var(--page-gutter) * 2);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    background-color: var(--second-color);
+    color: var(--footer-text);
+}
+
+.footer-main {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Logo, slogan, networks */
+.association-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-logo-name {
+    gap: var(--space-4);
+    display: flex;
+    align-items: center;
+}
+
+.footer-logo-name img {
+    width: auto;
+    height: 5vh;
+    min-height: 32px;
+}
+
+.footer-logo-name span {
+    color: var(--text-color-light);
+    font-weight: 700;
+}
+
+.association-info p,
+.association-info mark {
+    color: var(--footer-link);
+}
+
+.association-info p {
+    max-width: 32vw;
+    margin: var(--space-4) 0;
+    line-height: var(--line-height);
+}
+
+.social-icons {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    background-color: var(--first-color);
+    color: var(--text-color-dark);
+    transition: var(--transition-global);
+}
+
+/* Two columns of links: wide apart on a large screen, the gap of the footer (gap-l) under 1440 px */
+.footer-navigation {
+    display: flex;
+    gap: var(--space-8);
+}
+
+.footer-nav-section,
+.footer-nav-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-nav-title {
+    margin: var(--space-3) 0 0;
+    color: var(--text-color-light);
+}
+
+.footer-nav-link {
+    font-weight: 400;
+    color: var(--footer-link);
+}
+
+/* Copyright and legal links */
+.footer-legal {
+    display: flex;
+    justify-content: space-between;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--footer-border);
+}
+
+.footer-copyright {
+    margin: 0;
+}
+
+.legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.legal-link {
+    color: var(--footer-text);
+    cursor: pointer;
+}
+
+.legal-button {
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    text-decoration: none;
+}
+
+.legal-separator {
+    margin: 0 var(--space-2);
+    color: var(--first-color);
+}
+
+/* Blue band with the credit */
+.footer-bottom {
+    /* Hover color of its link (components/states.css): black, the only color with AA contrast on this blue
+       (white would be 3.6:1) */
+    --link-hover-color: var(--fourth-color);
+    background-color: var(--third-color);
+}
+
+.footer-bottom p {
+    margin: 0;
+    padding: var(--space-6) var(--space-4);
+    color: var(--second-color);
+    text-align: center;
+}
+
+.footer-bottom a {
+    color: var(--second-color);
+    font-weight: 600;
+    transition: var(--transition-global);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .social-icons a:hover .social-icon {
+        transform: var(--transform-pop);
+    }
+
+}
+
+@media (max-width: 1440px) {
+    .footer-top {
+        padding: var(--space-7) calc(var(--page-gutter) * 2);
+    }
+
+    .footer-main,
+    .footer-navigation {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* One rhythm on phones and tablets: the two lists of links are as far apart as the logo block and the lists */
+    .footer-navigation {
+        gap: var(--space-5);
+    }
+
+    .association-info p {
+        max-width: 100%;
+    }
+
+    .footer-logo-name,
+    .social-icons {
+        gap: var(--space-6);
+    }
+
+    .footer-legal {
+        flex-direction: column;
+        align-items: center;
+        padding-top: var(--space-6);
+        text-align: center;
+    }
+
+    .legal-links {
+        justify-content: center;
+        line-height: 2;
+    }
+
+    .legal-separator {
+        margin: 0 var(--space-3);
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-top {
+        padding: var(--space-7) var(--page-gutter);
+    }
+
+    .social-icons {
+        gap: var(--space-3);
+    }
+}

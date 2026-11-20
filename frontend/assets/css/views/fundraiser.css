@@ -1,0 +1,138 @@
+/* Fundraiser in progress (FundraiserProgress): a card of the design, the amount counting up, a bar that fills once
+   with a transform, then a light shine. Sizes never change while it moves (no layout shift). */
+.fundraiser {
+    --fundraiser-fill: 1600ms;
+    display: flex;
+    flex-direction: column;
+    padding: var(--card-padding);
+    border: 2px solid var(--fifth-color-50);
+    border-radius: var(--radius-md);
+    background: var(--first-color);
+    box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 8px 24px rgba(17, 24, 39, 0.05);
+}
+
+/* Inside a card of the dashboard: no second frame */
+.fundraiser.is-compact {
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+/* Place of the block: the same side margins as the blocks around it (choice buttons of the donation page), a
+   section space above it on the home page (after the hero), the space of the choice buttons under it on /don/ */
+.fundraiser-wrapper {
+    width: 100%;
+    padding: var(--space-section) calc(var(--page-gutter) * 2) 0;
+}
+
+.fundraiser-wrapper.is-donation {
+    padding: 0 calc(var(--page-gutter) * 2) var(--space-8);
+}
+
+@media (max-width: 480px) {
+    .fundraiser-wrapper,
+    .fundraiser-wrapper.is-donation {
+        padding-inline: var(--page-gutter);
+    }
+}
+
+.fundraiser-head {
+    display: flex;
+    flex-direction: column;
+}
+
+.fundraiser p,
+.fundraiser h2 {
+    margin: 0;
+}
+
+.fundraiser-label {
+    color: var(--accent-blue);
+    letter-spacing: 0.04em;
+}
+
+.fundraiser-title {
+    color: var(--text-color-dark);
+    line-height: 1.25;
+}
+
+/* Amount and percentage on one line; tabular figures: the counter never makes the line move */
+.fundraiser-amount {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0 var(--space-3);
+    font-variant-numeric: tabular-nums;
+}
+
+.fundraiser-amount strong {
+    color: var(--text-color-dark);
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.fundraiser-percent {
+    color: var(--accent-blue);
+}
+
+.fundraiser-bar {
+    position: relative;
+    height: 16px;
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    background: var(--btn-light-bg);
+    box-shadow: inset 0 1px 2px rgba(17, 24, 39, 0.08);
+}
+
+/* The fill grows from the left with scaleX only, with the soft curve of the site */
+.fundraiser-fill {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    background: var(--gradient-btn-primary);
+    transform: scaleX(var(--fill, 0));
+    transform-origin: left center;
+    transition: transform var(--fundraiser-fill) var(--ease-enter);
+}
+
+/* One light shine across the bar once it is full (and again after a new donation) */
+.fundraiser-shine {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: fundraiser-shine 1100ms var(--ease-enter) var(--fundraiser-fill) 1 forwards;
+}
+
+@keyframes fundraiser-shine {
+    0% { opacity: 0; transform: translateX(-100%); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translateX(100%); }
+}
+
+.fundraiser-goal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 var(--space-3);
+    color: var(--text-color-grey);
+    font-variant-numeric: tabular-nums;
+}
+
+.fundraiser-goal strong {
+    color: var(--text-color-dark);
+}
+
+/* Less motion: the final values at once, no shine */
+@media (prefers-reduced-motion: reduce) {
+    .fundraiser-fill {
+        transition: none;
+    }
+
+    .fundraiser-shine {
+        display: none;
+    }
+}

@@ -1,0 +1,45 @@
+/* Frame of every page: the content takes the free height, so the footer stays at the bottom */
+.app-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.app-shell main {
+    flex: 1;
+}
+
+/* "Site de démonstration": thin band at the very top, in the dark navy of the design */
+.demo-banner {
+    margin: 0;
+    padding: var(--space-1) var(--space-4);
+    background-color: var(--second-color);
+    color: var(--text-color-light);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.demo-banner strong {
+    color: var(--accent-green);
+}
+
+/* "Aller au contenu": first link of the page, shown when it gets the keyboard focus */
+.skip-link {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 20000;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    background-color: var(--second-color);
+    color: var(--text-color-light);
+    font-weight: 600;
+    transform: translateY(-200%);
+}
+
+.skip-link:focus {
+    transform: none;
+    color: var(--text-color-light);
+}

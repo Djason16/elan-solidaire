@@ -1,0 +1,297 @@
+/* Fields of the forms (FormField), in the look of the original design: grey 2 px border, blue on focus */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--field-gap);
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.field-label {
+    padding: 0;
+    color: var(--text-color-dark);
+    font-size: var(--font-normal);
+    font-weight: 600;
+}
+
+.input-type,
+.message-type {
+    width: 100%;
+    min-height: var(--field-height);
+    padding: var(--space-2) var(--space-3);
+    border: 2px solid var(--fifth-color-50);
+    border-radius: var(--radius-sm);
+    background: var(--first-color);
+    color: var(--text-color-dark);
+    font-weight: 600;
+    transition: var(--transition-global);
+}
+
+/* The size comes from the class text-normal of the field; the placeholder follows the font of the field */
+.input-type::placeholder,
+.message-type::placeholder {
+    color: var(--text-color-grey);
+    /* Same size as the typed text (the text-** class of the field), a little lighter */
+    font: inherit;
+    font-weight: 500;
+    opacity: 1;
+}
+
+/* Fields stay at 16 px on phones although text-normal gets smaller there: under 16 px, iPhone zooms on focus */
+@media (max-width: 768px) {
+    .input-type.text-normal,
+    .message-type.text-normal {
+        font-size: 1rem !important;
+    }
+}
+
+.input-type:focus,
+.message-type:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+}
+
+.input-type:focus-visible,
+.message-type:focus-visible {
+    box-shadow: 0 0 0 3px rgba(31, 116, 171, 0.25);
+}
+
+.input-type:disabled,
+.message-type:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: var(--btn-light-bg-disabled);
+}
+
+.input-type[type="file"] {
+    padding: var(--space-2) var(--space-3);
+    cursor: pointer;
+}
+
+.message-type {
+    min-height: 250px;
+    resize: vertical;
+    line-height: var(--line-height);
+}
+
+[aria-invalid="true"] {
+    border-color: var(--accent-red);
+}
+
+/* Native select drawn like the custom select of the design: the small round chevron on the right */
+.select-wrapper {
+    position: relative;
+    display: block;
+}
+
+.select-wrapper select {
+    appearance: none;
+    padding-right: var(--space-7);
+    cursor: pointer;
+}
+
+.select-wrapper .classic-btn {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .input-type:not(:disabled):hover,
+    .message-type:not(:disabled):hover {
+        border-color: var(--accent-blue);
+    }
+}
+
+.field-hint {
+    margin: 0;
+    color: var(--text-color-grey);
+}
+
+.field-error {
+    margin: 0;
+    color: var(--accent-red);
+    font-weight: 600;
+}
+
+/* Square check box of the design (black when checked). The box sits on the middle of the first line of its text,
+   whatever the number of lines: line-height 1.5, box 1.1em, so (1.5em - 1.1em) / 2 above it. 24 px high at least
+   (touch target) */
+.checkbox-field {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    width: fit-content;
+    min-height: 24px;
+    color: var(--text-color-dark);
+    line-height: 1.5;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-label,
+.checkbox-label * {
+    line-height: 1.5;
+}
+
+.checkbox-field input {
+    position: absolute;
+    opacity: 0;
+    width: 1em;
+    height: 1em;
+    margin: 0;
+}
+
+.checkbox-custom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.1em;
+    height: 1.1em;
+    margin-top: calc((1.5em - 1.1em) / 2);
+    border: 2px solid var(--text-color-dark);
+    background-color: var(--first-color);
+    transition: var(--transition-global);
+}
+
+.checkbox-check {
+    width: 0.7em;
+    height: 0.7em;
+    color: var(--text-color-light);
+    opacity: 0;
+}
+
+.checkbox-field input:checked + .checkbox-custom {
+    background-color: var(--second-color);
+}
+
+.checkbox-field input:checked + .checkbox-custom .checkbox-check {
+    opacity: 1;
+}
+
+.checkbox-field input:focus-visible + .checkbox-custom {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
+}
+
+.checkbox-field.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Radio buttons of the design: grey ring, blue ring and grey dot when checked */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-5);
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    color: var(--text-color-dark);
+    cursor: pointer;
+}
+
+.radio-item input {
+    position: relative;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    /* The 24 px ring on the middle of the first line of text (1.5em high) */
+    margin: calc((1.5em - 24px) / 2) 0 0;
+    border: 3px solid var(--checkbox-border-inactive);
+    border-radius: 50%;
+    background-color: var(--checkbox-bg-inactive);
+    appearance: none;
+    cursor: pointer;
+    transition: var(--transition-global);
+}
+
+.radio-item input::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--text-color-grey);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform var(--fast-transition);
+}
+
+.radio-item input:checked {
+    border-color: var(--accent-blue);
+    background-color: transparent;
+}
+
+.radio-item input:checked::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.radio-item input:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .radio-item input:hover {
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+}
+
+@media (max-width: 768px) {
+    .field-label,
+    :is(fieldset.form-group, .field-choices, .size-picker, .payment-fieldset) > legend {
+        font-size: calc(var(--font-normal) - 0.1rem);
+    }
+
+    .message-type {
+        min-height: 100px;
+        line-height: var(--line-height-medium);
+    }
+}
+
+@media (max-width: 480px) {
+    /* 16 px stays on the fields: a smaller text makes phones zoom on the field */
+    .field-label,
+    :is(fieldset.form-group, .field-choices, .size-picker, .payment-fieldset) > legend {
+        font-size: calc(var(--font-normal) - 0.2rem);
+    }
+}
+
+/* File field: the native input covers the button of the site (clicks and keyboard reach it), the name under it */
+.file-field {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+}
+
+.file-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-name {
+    min-width: 0;
+    color: var(--text-color-grey);
+    overflow-wrap: anywhere;
+}
+
+.file-input:focus-visible + .file-button {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
+}

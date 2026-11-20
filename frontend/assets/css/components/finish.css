@@ -1,0 +1,67 @@
+/*
+ * Finish of the site: principles of careful product sites, applied with the colors and shapes of Élan Solidaire's own
+ * design.
+ *   1. Rhythm: every section of a page takes the same fluid space (--space-section), generous on a computer and
+ *      compact on a phone.
+ *   2. Display type: large headings with a tight line height and slightly closed letter spacing, a clear hierarchy
+ *      between the heading and its text (short text, limited width).
+ *   3. Balanced visuals: the pictures of the pillars no longer take the whole screen on a computer.
+ *   4. Soft depth: very light shadows on the cards at rest, a little more on hover (components/states.css).
+ *   5. Calm motion: short reveals with a regular stagger (components/motion.css), only transform and opacity.
+ */
+
+/* 1. Rhythm of the sections */
+.section-intro.align-center,
+.section-intro.align-left {
+    padding-block: var(--space-section);
+}
+
+.section-intro {
+    gap: var(--space-4);
+}
+
+/* 2. Display type: headings */
+.text-title,
+.text-title-large,
+.text-taller,
+.text-tall {
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+}
+
+.text-xxlarge,
+.section-title {
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+.section-title {
+    font-weight: 700;
+    text-wrap: balance;
+}
+
+/* The text under a section heading: a comfortable line length */
+.section-intro > p,
+.section-intro > div > p {
+    max-width: 62ch;
+    margin-inline: auto;
+    text-wrap: pretty;
+}
+
+.section-intro.align-left > p {
+    margin-inline: 0;
+}
+
+/* 3. Pillars of the mission: the picture keeps a reasonable size next to the text */
+.essentials-images {
+    width: min(100%, 560px);
+    max-width: 560px;
+}
+
+/* 4. Soft depth of the cards */
+.card,
+.contact-card,
+.stat-item {
+    box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 8px 24px rgba(17, 24, 39, 0.05);
+}

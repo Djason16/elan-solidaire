@@ -1,0 +1,145 @@
+/* Base of the whole site, as in the original design (white page, grey text, Public Sans), plus a light reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* No grey box on a tapped link or button (iPhone, Android): a tap shows no hover-like effect */
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-weight: 400;
+    color: var(--text-color-grey);
+    background-color: var(--first-color);
+    margin: 0 auto;
+    padding: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
+/* Images never wider than their box */
+img,
+svg,
+video {
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+a {
+    color: var(--second-color);
+    text-decoration: none;
+    transition: var(--transition-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    a:hover {
+        color: var(--accent-blue);
+    }
+}
+
+/* Inline icons (components/ui/Icon): the size of the text */
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    vertical-align: -0.125em;
+}
+
+.icon-spin {
+    animation: icon-spin 1s linear infinite;
+}
+
+@keyframes icon-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Small helpers used by the views: vertical stack, wrapping row, spaces */
+.stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Spacing classes (same names as the other sites), on the fluid --space-* scale of utils/variables.css */
+.gap-xxs { gap: var(--space-1) !important; }
+.gap-xs { gap: var(--space-2) !important; }
+.gap-s { gap: var(--space-3) !important; }
+.gap-m { gap: var(--space-4) !important; }
+.gap-l { gap: var(--space-5) !important; }
+.gap-xl { gap: var(--space-6) !important; }
+.gap-xxl { gap: var(--space-7) !important; }
+.gap-xxxl { gap: var(--space-8) !important; }
+
+.mt-xxs { margin-top: var(--space-1) !important; }
+.mt-xs { margin-top: var(--space-2) !important; }
+.mt-s { margin-top: var(--space-3) !important; }
+.mt-m { margin-top: var(--space-4) !important; }
+.mt-l { margin-top: var(--space-5) !important; }
+.mt-xl { margin-top: var(--space-6) !important; }
+.mt-xxl { margin-top: var(--space-7) !important; }
+.mt-xxxl { margin-top: var(--space-8) !important; }
+
+.mb-xxs { margin-bottom: var(--space-1) !important; }
+.mb-xs { margin-bottom: var(--space-2) !important; }
+.mb-s { margin-bottom: var(--space-3) !important; }
+.mb-m { margin-bottom: var(--space-4) !important; }
+.mb-l { margin-bottom: var(--space-5) !important; }
+.mb-xl { margin-bottom: var(--space-6) !important; }
+.mb-xxl { margin-bottom: var(--space-7) !important; }
+.mb-xxxl { margin-bottom: var(--space-8) !important; }
+
+/* Visitors who ask their system for less motion */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
+
+/* Lines of one group of information (InfoLines: name and e-mail, street and city, status and tracking number): tight
+   and the same everywhere (--info-line-gap); long words wrap instead of passing the edge */
+.info-lines {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--info-line-gap);
+    line-height: var(--line-height-medium);
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* Several groups in one cell (status, then tracking number): the gap between groups, the same as between two fields */
+.info-lines.info-groups {
+    gap: var(--info-group-gap);
+}

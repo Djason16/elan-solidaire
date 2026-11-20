@@ -1,0 +1,101 @@
+/* Lists of records (DataList), as the editable lists of the original design: one bordered card per record */
+.data-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap);
+    padding: var(--card-padding);
+    border: 2px solid var(--fifth-color-50);
+    border-radius: var(--radius-md);
+    background: var(--first-color);
+}
+
+.item-fields {
+    display: flex;
+    flex-wrap: wrap;
+    /* Between two groups of information */
+    gap: var(--info-group-gap);
+    margin: 0;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    /* Label -> its value */
+    gap: var(--info-label-gap);
+    flex: 1 1 100%;
+    min-width: 0;
+}
+
+.field-group.field-half {
+    flex: 1 1 calc(50% - 1vh);
+    min-width: min(200px, 100%);
+}
+
+.item-label {
+    margin: 0;
+    padding: 0;
+    line-height: var(--line-height-medium);
+    color: var(--text-color-dark);
+}
+
+.item-value {
+    margin: 0;
+    line-height: var(--line-height-medium);
+    color: var(--text-color-grey);
+    overflow-wrap: anywhere;
+}
+
+.item-value small {
+    color: var(--text-color-grey);
+}
+
+.item-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.data-list-empty {
+    margin: 0;
+    padding: var(--space-4) var(--space-2);
+    color: var(--text-color-grey);
+    text-align: center;
+}
+
+/* Small labels of a status: paid, pending, sent... */
+.badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.badge-success {
+    background: var(--accent-green-25);
+    color: var(--accent-green-dark);
+}
+
+.badge-warning {
+    background: #FDF1D6;
+    color: #7A5200;
+}
+
+.badge-danger {
+    background: #FBE3E1;
+    color: #A3271C;
+}
+
+@media (max-width: 480px) {
+    .item-actions {
+        justify-content: flex-start;
+    }
+}

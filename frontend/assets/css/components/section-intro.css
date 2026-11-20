@@ -1,0 +1,110 @@
+/* Opening of a section (SectionIntro) and white bordered card (.card), as in the original design */
+.section-intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.section-intro > * {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+.section-intro.is-visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-intro.is-visible > :nth-child(1) { transition-delay: 0.0s; }
+.section-intro.is-visible > :nth-child(2) { transition-delay: 0.1s; }
+
+.section-intro.align-center {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.section-intro.align-center,
+.section-intro.align-left {
+    padding: var(--space-8) var(--page-gutter);
+}
+
+.section-intro.align-left {
+    align-items: flex-start;
+    text-align: left;
+}
+
+.section-intro.no-padding {
+    padding: 0 !important;
+}
+
+.section-title {
+    margin: 0;
+    padding: 0;
+    color: var(--text-color-dark);
+    font-weight: 600;
+}
+
+.section-description {
+    max-width: 50vw;
+    line-height: var(--line-height);
+}
+
+.section-description p {
+    margin: 0;
+}
+
+.section-description mark,
+.section-title mark {
+    background: transparent;
+    color: var(--text-color-grey);
+    font-weight: 600;
+}
+
+@media (max-width: 1280px) {
+    .section-description {
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-intro.align-center,
+    .section-intro.align-left {
+        padding: var(--space-8) var(--page-gutter);
+    }
+}
+
+/* Card of the forms and panels */
+.card {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap);
+    padding: var(--card-padding);
+    border: 2px solid var(--fifth-color-50);
+    border-radius: var(--radius-md);
+    background: var(--first-color);
+}
+
+@media (max-width: 1440px) {
+    .card {
+        padding: var(--card-padding);
+        gap: var(--card-gap);
+    }
+}
+
+@media (max-width: 360px) {
+    .card {
+        padding: var(--card-padding);
+        gap: var(--card-gap);
+    }
+}
+
+/* Highlighted words in the texts of the design: bold, same color */
+mark {
+    background: transparent;
+    color: inherit;
+    font-weight: 600;
+}

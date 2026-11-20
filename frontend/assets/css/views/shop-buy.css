@@ -1,0 +1,79 @@
+/* Purchase block of the product page: size picker and add to cart (split from shop-product.css) */
+
+/* Size picker: one pill per size with its stock, the chosen one in blue (radio buttons underneath) */
+.size-picker {
+    gap: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.size-option {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 64px;
+    min-height: 52px;
+    padding: var(--space-1) var(--space-3);
+    border: 2px solid var(--fifth-color-50);
+    border-radius: var(--radius-md);
+    background: var(--first-color);
+    color: var(--text-color-dark);
+    cursor: pointer;
+    transition: var(--transition-global);
+}
+
+.size-option input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+}
+
+.size-label { font-weight: 700; }
+.size-stock { color: var(--text-color-grey); }
+
+.size-option:has(input:checked) {
+    border-color: var(--accent-blue);
+    background: var(--gradient-btn-primary);
+    color: var(--text-color-light);
+}
+
+.size-option:has(input:checked) .size-stock { color: var(--text-color-light); }
+
+.size-option:has(input:focus-visible) {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
+}
+
+/* Size out of stock: greyed and struck through, still readable (no transparency on the text) */
+.size-option.is-disabled {
+    border-style: dashed;
+    background: var(--info-box-bg);
+    opacity: 1;
+}
+
+.size-option.is-disabled .size-label {
+    color: var(--text-color-grey);
+    text-decoration: line-through;
+}
+
+/* Add to cart: the height and corners of the fields above it */
+.action-button.add-to-cart-btn {
+    min-height: var(--field-height);
+    padding-block: var(--space-2);
+}

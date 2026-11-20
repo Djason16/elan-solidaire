@@ -1,0 +1,76 @@
+/*
+ * Font of the site: Public Sans (SIL Open Font License), the weights used by the design, in public/fonts/PublicSans/.
+ * The browser downloads a file only when a text of the page uses it. The regular and semi-bold files are preloaded
+ * (pages/_document.jsx): they are seen at the top of every page.
+ */
+@font-face {
+    font-family: "Public Sans";
+    src: url("/fonts/PublicSans/PublicSans-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Public Sans";
+    src: url("/fonts/PublicSans/PublicSans-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Public Sans";
+    src: url("/fonts/PublicSans/PublicSans-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Public Sans";
+    src: url("/fonts/PublicSans/PublicSans-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Public Sans";
+    src: url("/fonts/PublicSans/PublicSans-ExtraBold.woff2") format("woff2");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Public Sans";
+    src: url("/fonts/PublicSans/PublicSans-Black.woff2") format("woff2");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Public Sans";
+    src: url("/fonts/PublicSans/PublicSans-Italic.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Public Sans";
+    src: url("/fonts/PublicSans/PublicSans-MediumItalic.woff2") format("woff2");
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Public Sans";
+    src: url("/fonts/PublicSans/PublicSans-BlackItalic.woff2") format("woff2");
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}

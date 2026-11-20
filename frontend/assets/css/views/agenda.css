@@ -1,0 +1,186 @@
+/* Agenda (/evenements/) and event page, in the style of the shop and of the home page: photo with rounded corners of
+   the design, date block, status badge, icons of the site, the common spacing tokens */
+.agenda {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-section);
+}
+
+.agenda-past {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+}
+
+.agenda-past .section-title {
+    margin: 0;
+    color: var(--text-color-dark);
+}
+
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: var(--grid-gap);
+}
+
+/* Cards rise one after the other when the grid comes on screen (transform only: nothing hidden at the top) */
+.event-grid > * {
+    transform: translateY(var(--space-4));
+    transition: transform var(--motion-slow) var(--ease-enter);
+    transition-delay: calc(min(var(--item-index, 0), 5) * var(--motion-stagger));
+}
+
+.event-grid.is-visible > * {
+    transform: none;
+}
+
+.event-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap);
+    height: 100%;
+}
+
+.event-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--card-gap);
+}
+
+/* The button at the bottom of every card, whatever the length of the title */
+.event-body .action-button {
+    margin-top: auto;
+}
+
+.event-title {
+    margin: 0;
+    color: var(--text-color-dark);
+    line-height: 1.3;
+}
+
+/* ---------- Photo, date block and status badge ---------- */
+.event-image {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: 12px 24px;
+    background: var(--fifth-color-50);
+}
+
+.event-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--motion-base) var(--ease-enter);
+}
+
+.event-date-block {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 56px;
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--first-color);
+    box-shadow: 0 6px 16px rgba(17, 24, 39, 0.16);
+    line-height: 1;
+}
+
+.event-date-block strong {
+    color: var(--text-color-dark);
+    font-size: var(--font-xxlarge);
+    font-weight: 700;
+}
+
+.event-date-block span {
+    color: var(--accent-blue);
+    font-size: var(--font-small);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.event-badge {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    margin: 0;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+}
+
+.event-badge.is-open { background: var(--accent-green); color: var(--second-color); }
+.event-badge.is-few { background: var(--accent-yellow); color: var(--second-color); }
+.event-badge.is-full { background: var(--accent-red); color: var(--text-color-light); }
+.event-badge.is-past { background: var(--second-color); color: var(--text-color-light); }
+
+/* Past event: the photo is greyed, the texts keep their AA contrast */
+.is-past .event-image img,
+.event-image.is-past img {
+    filter: grayscale(1);
+    opacity: 0.7;
+}
+
+/* ---------- Time, place, places left with the icons of the site ---------- */
+.event-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    color: var(--text-color-grey);
+    list-style: none;
+}
+
+.event-meta li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    line-height: var(--line-height-medium);
+}
+
+.event-meta .icon {
+    flex-shrink: 0;
+    color: var(--accent-blue);
+}
+
+/* ---------- Event page ---------- */
+.event-image-large {
+    aspect-ratio: 3 / 2;
+}
+
+.event-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap);
+}
+
+.event-info .product-title,
+.event-description {
+    margin: 0;
+}
+
+.event-description {
+    line-height: var(--line-height);
+}
+
+.event-info > .action-button {
+    align-self: flex-start;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .event-card:hover .event-image img {
+        transform: scale(1.04);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .event-grid > * {
+        transform: none;
+    }
+}

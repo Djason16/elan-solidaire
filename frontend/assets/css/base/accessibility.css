@@ -1,0 +1,29 @@
+/* Hidden on screen but read by screen readers and search engines */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Keyboard focus always visible (never outline: none without :focus-visible) */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
+}
+
+/* On a touch screen only: links and buttons at least 24 px high (WCAG 2.2 AA); nothing changes with a mouse */
+@media (pointer: coarse) {
+    .footer-nav-link,
+    .legal-link,
+    .text-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 32px;
+    }
+}

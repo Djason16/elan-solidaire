@@ -1,0 +1,255 @@
+/* Newsletter card and questions of the home page (original design) */
+
+/* Dark card: green italic highlight in the title, white outline field, round send button */
+.action-card-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-8) var(--page-gutter) 0;
+}
+
+.action-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: var(--space-8) var(--space-8);
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--second-color);
+    color: var(--text-color-light);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+.action-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Picture that appears softly behind the text on hover */
+.card-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: image-set(url("/photos/home/newsletter-960.webp") 1x, url("/photos/home/newsletter-1920.webp") 2x) center / cover no-repeat;
+    opacity: 0;
+    transform: scale(1.1);
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+.action-card h2,
+.action-card p,
+.action-buttons {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+.action-card.is-visible h2 { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
+.action-card.is-visible p { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+.action-card.is-visible .action-buttons { opacity: 1; transform: translateY(0); transition-delay: 0.28s; }
+
+.action-card h2 {
+    color: var(--text-color-light);
+    font-weight: 700;
+}
+
+.action-card h2 mark {
+    color: var(--accent-green);
+    font-style: italic;
+    font-weight: 700;
+}
+
+.action-card p {
+    line-height: var(--line-height);
+}
+
+.action-card p mark {
+    color: var(--text-color-light);
+    font-weight: 700;
+}
+
+/* E-mail field and button one under the other, exactly the same width, height, padding and corners */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--form-gap);
+    width: min(100%, 420px);
+    margin: 0 auto;
+    padding: 0;
+}
+
+.newsletter-field,
+.newsletter-send {
+    width: 100%;
+}
+
+.newsletter-field .input-type,
+.action-button.newsletter-send {
+    box-sizing: border-box;
+    min-height: var(--field-height);
+    padding: var(--space-2) var(--space-4);
+    border: 2px solid transparent;
+    border-radius: var(--radius-pill);
+    line-height: 1.2;
+}
+
+/* White outline e-mail field of the design (the "primary" input) */
+.newsletter-field .input-type {
+    border-color: var(--btn-ghost-border);
+    border-radius: var(--radius-pill);
+    background: var(--btn-ghost-bg);
+    color: var(--text-color-light);
+    text-align: center;
+    backdrop-filter: var(--blur);
+}
+
+.newsletter-field .input-type::placeholder {
+    color: var(--text-color-light);
+    font: inherit;
+    text-align: center;
+}
+
+.newsletter-field .input-type:focus {
+    background: var(--btn-ghost-hover);
+    border-color: var(--btn-ghost-border);
+}
+
+.newsletter-field .field-error {
+    color: #ffb4ab;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .action-card:hover .card-image {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 1024px) {
+    .action-card-wrapper {
+        padding: var(--space-8) var(--page-gutter) 0;
+    }
+
+    .action-card h2 {
+        font-size: var(--font-xlarge) !important;
+    }
+
+    .action-card p {
+        font-size: var(--font-normal) !important;
+    }
+
+    .card-image {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .action-card {
+        padding: var(--space-7) calc(var(--page-gutter) * 2);
+    }
+
+    .action-buttons {
+        width: 100%;
+    }
+}
+
+/* Questions: rules between the items, grey question with dark key words */
+.faqs-index {
+    display: flex;
+    flex-direction: column;
+    padding: 0 calc(var(--page-gutter) * 2) var(--space-8);
+}
+
+.faq {
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--border-grey-50);
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+.faq:first-child {
+    border-top: 1px solid var(--border-grey-50);
+}
+
+.faqs-index.is-visible .faq {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.faqs-index.is-visible .faq:nth-child(2) { transition-delay: 0.1s; }
+.faqs-index.is-visible .faq:nth-child(3) { transition-delay: 0.2s; }
+.faqs-index.is-visible .faq:nth-child(4) { transition-delay: 0.3s; }
+.faqs-index.is-visible .faq:nth-child(5) { transition-delay: 0.4s; }
+.faqs-index.is-visible .faq:nth-child(6) { transition-delay: 0.5s; }
+
+.faq .expandable-header {
+    gap: var(--space-6);
+    padding-bottom: 0;
+}
+
+.faq .expandable-inner > :first-child {
+    margin-top: 0;
+    padding-top: var(--space-4);
+}
+
+.faq-question {
+    margin: 0;
+    padding: 0;
+    color: var(--text-color-grey);
+    font-weight: 400;
+}
+
+.faq-question mark {
+    color: var(--text-color-dark);
+    font-weight: 600;
+}
+
+.faq-answer {
+    margin: var(--space-4) 0 0;
+    line-height: var(--line-height);
+}
+
+@media (max-width: 1440px) {
+    .faqs-index {
+        padding: 0 calc(var(--page-gutter) * 2) var(--space-8);
+    }
+}
+
+@media (max-width: 1024px) {
+    .faqs-index {
+        padding: 0 calc(var(--page-gutter) * 2) var(--space-8);
+    }
+}
+
+@media (max-width: 480px) {
+    .faqs-index {
+        padding: 0 calc(var(--page-gutter) * 2) var(--space-8);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .action-card,
+    .action-card h2,
+    .action-card p,
+    .action-buttons,
+    .faq,
+    .action > *,
+    .essentials-index > *,
+    .media-item,
+    .map-container > * {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

@@ -1,0 +1,87 @@
+/* Features page, donation extras and dashboard extras (same tokens as the rest of the site) */
+
+/* ---------- Donation: tax estimate and receipt ---------- */
+.tax-estimate {
+    margin: 0;
+    color: var(--text-color-grey);
+}
+
+.tax-estimate strong {
+    color: var(--accent-green-dark);
+}
+
+.receipt-box {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--info-box-bg);
+}
+
+.receipt-box p {
+    margin: 0;
+    color: var(--text-color-dark);
+}
+
+/* ---------- Dashboard ---------- */
+.overview-pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: var(--grid-gap);
+}
+
+.expiring-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.expiring-list li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border-grey-50);
+}
+
+/* ---------- Orders: dated steps, note of the simulated carrier, tracking page ---------- */
+.order-tracking {
+    overflow-wrap: anywhere;
+}
+
+/* Tracking number: figures of the same width, a little spaced, easy to read and to copy */
+.tracking-number {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+}
+
+.order-history {
+    display: flex;
+    flex-direction: column;
+    gap: var(--info-line-gap);
+    margin: 0;
+    padding-left: var(--space-4);
+}
+
+.order-history small {
+    color: var(--text-color-grey);
+}
+
+.admin-note {
+    margin: 0;
+    color: var(--text-color-grey);
+}
+
+.tracking-card p,
+.tracking-card h2 {
+    margin: 0;
+}
+
+.tracking-card h2 {
+    color: var(--text-color-dark);
+    font-weight: 700;
+}

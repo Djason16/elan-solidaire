@@ -1,0 +1,208 @@
+/* Information column of the support forms and dark card of the other ways to help (original design) */
+/* Information column next to a form: white card and dark impact block */
+.support-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.reasons-list,
+.impact-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.reasons-list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-color-grey);
+    line-height: var(--line-height-medium);
+}
+
+.reason-icon {
+    width: 1.1em;
+    height: 1.1em;
+    color: var(--accent-green-dark);
+}
+
+/* Lists of advantages and reasons: compact, two columns from the tablet width (the card no longer looks empty) */
+.support-info .card .reasons-list {
+    gap: var(--space-3) var(--space-5);
+}
+
+@media (min-width: 768px) {
+    .support-info .card .reasons-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.reasons-list mark {
+    color: var(--text-color-grey);
+}
+
+.info-extra {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: var(--space-6) var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--second-color);
+    color: var(--text-color-light);
+}
+
+.info-extra h2 {
+    margin: 0;
+    color: var(--text-color-light);
+    font-weight: 600;
+}
+
+.impact-item {
+    display: flex;
+    align-items: center;
+}
+
+.impact-price {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-width: 95px;
+    height: 95px;
+    border-radius: 6px 12px;
+    background: var(--accent-green);
+    color: var(--text-color-dark);
+}
+
+.impact-description {
+    flex: 1;
+    color: var(--text-color-light);
+    font-weight: 300;
+    line-height: var(--line-height);
+}
+
+.impact-description mark {
+    color: var(--text-color-light);
+    font-weight: 700;
+}
+
+@media (max-width: 1440px) {
+    .info-extra {
+        padding: var(--space-6) var(--space-5);
+    }
+
+    .impact-price {
+        min-width: 70px;
+        height: 70px;
+    }
+}
+
+@media (max-width: 360px) {
+    .info-extra {
+        padding: var(--space-5) var(--space-4);
+    }
+
+    .impact-price {
+        min-width: 56px;
+        height: 56px;
+    }
+}
+
+/* Dark card of the other ways to help, its illustration faint behind the text */
+.support-card-wrapper {
+    min-height: 25vh;
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    transition: opacity var(--duration-reveal) var(--ease) 0.9s, transform var(--duration-reveal) var(--ease) 0.9s;
+}
+
+.support-card-wrapper.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+.support-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 25vh;
+    overflow: hidden;
+    padding: var(--space-8) var(--space-8);
+    border-radius: var(--radius-lg);
+    background: var(--second-color);
+    color: var(--text-color-light);
+    text-align: center;
+    animation: support-card-in var(--motion-slow) var(--ease-enter);
+}
+
+.support-card-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--bg) center / cover no-repeat;
+    opacity: 0;
+    transform: scale(1.1);
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+.support-card h3,
+.support-card p {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.support-card h3 {
+    color: var(--text-color-light);
+    font-weight: 700;
+}
+
+.support-card h3 mark {
+    color: var(--accent-green);
+    font-style: italic;
+    font-weight: 700;
+}
+
+.support-card p {
+    color: var(--text-color-light);
+    line-height: var(--line-height);
+}
+
+.support-card p mark {
+    color: var(--text-color-light);
+    font-weight: 700;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .support-card:hover .support-card-image {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 1024px) {
+    .support-card-image {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 480px) {
+    .support-card {
+        padding: var(--space-8) var(--page-gutter);
+    }
+}
+
+@keyframes support-card-in {
+    from { opacity: 0; transform: translateY(10px); }
+}

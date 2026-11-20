@@ -1,0 +1,227 @@
+/* Buttons of the original design */
+
+/* Action button (BaseButton): pill with a gradient */
+.action-button {
+    font-size: var(--font-normal);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: var(--space-3) var(--space-5);
+    padding-inline: var(--space-5);
+    border: none;
+    border-radius: var(--radius-pill);
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-global);
+}
+
+.action-button.squared {
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-6);
+    padding-inline: var(--space-6);
+}
+
+.action-button.full {
+    width: 100%;
+}
+
+.action-button.icon-only {
+    padding-inline: var(--space-4);
+}
+
+.action-button.primary {
+    background: var(--gradient-btn-primary);
+    color: var(--text-color-light);
+}
+
+.action-button.secondary {
+    background: var(--gradient-btn-secondary);
+    color: var(--text-color-dark);
+}
+
+/* White outline on a dark background or a photo */
+.action-button.tertiary {
+    background: var(--btn-ghost-bg);
+    border: 2px solid var(--btn-ghost-border);
+    color: var(--text-color-light);
+    backdrop-filter: var(--blur);
+}
+
+.action-button.danger {
+    background: var(--gradient-btn-danger);
+    color: var(--text-color-light);
+}
+
+/* Text link that acts like a button */
+.action-button.ghost {
+    min-height: auto;
+    padding: var(--space-1) 0;
+    background: none;
+    color: var(--accent-blue);
+    text-decoration: none;
+}
+
+.action-button[aria-pressed="true"] {
+    background: var(--gradient-btn-primary);
+    color: var(--text-color-light);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .action-button.primary:not(:disabled):hover {
+        background: var(--gradient-btn-primary-hover);
+        color: var(--text-color-light);
+    }
+
+    .action-button.secondary:not(:disabled):hover {
+        background: var(--gradient-btn-secondary-hover);
+        color: var(--text-color-dark);
+    }
+
+    .action-button.tertiary:not(:disabled):hover {
+        background: var(--btn-ghost-hover);
+        color: var(--text-color-light);
+    }
+
+    .action-button.danger:not(:disabled):hover {
+        background: var(--gradient-btn-danger-hover);
+        color: var(--text-color-light);
+    }
+
+    .action-button.ghost:not(:disabled):hover {
+        color: var(--second-color);
+    }
+}
+
+/* Round button (CircleButton): cart, menu, back to top, cookies */
+.circle-button {
+    position: relative;
+    width: 43px;
+    height: 43px;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--btn-light-bg);
+    color: var(--text-color-dark);
+    padding: 0;
+    font-size: var(--font-normal);
+    cursor: pointer;
+    transition: var(--transition-global);
+}
+
+.circle-button.active {
+    background: var(--gradient-btn-primary);
+    color: var(--text-color-light);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .circle-button:not(:disabled):hover {
+        background: var(--btn-light-bg-hover);
+    }
+
+    .circle-button.active:not(:disabled):hover {
+        background: var(--gradient-btn-primary-hover);
+    }
+}
+
+/* Badge with the number of articles, on the cart button */
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 var(--space-1);
+    background: var(--accent-blue);
+    color: var(--text-color-light);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* Three bars of the menu button, crossed when the menu is open */
+.burger-line {
+    width: 20px;
+    height: 2px;
+    margin: 2px 0;
+    border-radius: 3px;
+    background: currentColor;
+    display: block;
+    transition: transform var(--fast-transition), opacity var(--fast-transition);
+}
+
+.burger-line.open:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.burger-line.open:nth-child(2) { opacity: 0; transform: translateX(-20px); }
+.burger-line.open:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Floating round buttons: cookie settings at the bottom left, back to the top at the bottom right */
+.floating-left {
+    position: fixed;
+    left: 1.5rem;
+    z-index: 900;
+}
+
+.back-to-top-btn {
+    left: auto;
+    right: 1.5rem;
+    bottom: 14px;
+}
+
+.cookie-settings-btn {
+    bottom: 14px;
+}
+
+@media (max-width: 768px) {
+    .floating-left {
+        left: 1rem;
+    }
+
+    .back-to-top-btn {
+        left: auto;
+        right: 1rem;
+    }
+}
+
+
+/* Small round button of the design ("classic button"): carousel arrows, quantity buttons, close the photo, and the
+   chevron of the folding blocks and of the lists. ONE hover for all, defined here: the dark blue turns light blue.
+   Colors come from --classic-btn-*; a variant changes only these variables. */
+.classic-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-width);
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--classic-btn-bg);
+    color: var(--classic-btn-color);
+    font-size: 10px;
+    cursor: pointer;
+    transition: var(--transition-global);
+}
+
+.classic-btn .icon {
+    transition: transform var(--duration-hover) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    /* The button itself, or the decorative chevron when its whole row (folding block, list) is hovered */
+    button.classic-btn:not(:disabled):hover,
+    .expandable-header:hover .classic-btn,
+    .select-wrapper:hover .classic-btn {
+        background: var(--classic-btn-bg-hover);
+    }
+}

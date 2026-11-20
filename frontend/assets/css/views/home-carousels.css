@@ -1,0 +1,257 @@
+/* Carousels of the home page: scrollbar of the design, the three pillars, the photo strip and its lightbox */
+
+/* Scrollbar (components/ui/Carousel/Scrollbar): small round arrows around a thin dark track, blue thumb */
+.scrollbar-wrapper {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.scrollbar-wrapper.orientation-vertical {
+    flex-direction: column;
+    gap: var(--space-5);
+    width: var(--scrollbar-width);
+    height: 350px;
+}
+
+.scrollbar-wrapper.orientation-horizontal {
+    gap: var(--space-6);
+    width: 55vw;
+    max-width: 100%;
+    height: var(--scrollbar-width);
+}
+
+.scrollbar-button {
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+
+.scrollbar-track {
+    position: relative;
+    flex: 1;
+    margin: 0 var(--space-2);
+    background: var(--scrollbar-track-color);
+    cursor: pointer;
+    touch-action: none;
+}
+
+/* A larger invisible area around the thin track: easy to grab with a finger or the mouse */
+.scrollbar-track::before {
+    content: "";
+    position: absolute;
+    inset: -12px;
+}
+
+.orientation-vertical .scrollbar-track { width: 4px; height: 100%; }
+.orientation-horizontal .scrollbar-track { width: 100%; height: 4px; }
+
+/* Vertical bar (pillars of the mission, computer): the track and the thumb have the same rounded ends, the thumb is
+   exactly as wide as the track and moves only inside it (no border, no shadow, no line at the ends) */
+.orientation-vertical .scrollbar-track {
+    border-radius: var(--scrollbar-radius);
+}
+
+.orientation-vertical .scrollbar-thumb {
+    border-radius: var(--scrollbar-radius);
+}
+
+.scrollbar-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--scrollbar-thumb-color);
+    /* Only the transform moves (no layout work); no delay while it is dragged */
+    transition: transform var(--fast-transition);
+}
+
+.scrollbar-track.is-dragging .scrollbar-thumb {
+    transition: none;
+}
+
+.scrollbar-button {
+    flex: 0 0 var(--scrollbar-width);
+    aspect-ratio: 1;
+}
+
+.orientation-vertical .scrollbar-thumb { width: 100%; }
+.orientation-horizontal .scrollbar-thumb { height: 100%; }
+
+
+/* On a touch screen the arrows are larger to touch (24 px at least) */
+@media (pointer: coarse) {
+    .scrollbar-button {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* The three pillars: scrollbar, text, picture */
+.essentials-index {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    /* No overflow: hidden here (it cut the bottom of the scrollbar buttons on a phone); the entry animation only
+       moves by 24 px inside the block, room for it and for the focus ring is kept by the padding */
+    padding: var(--space-3) var(--page-gutter);
+}
+
+/* Long words of the slides wrap instead of passing the edge */
+.essentials-slide h3,
+.essentials-slide p {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
+.essentials-index > * {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+/* Only while it waits for its entrance: the browser prepares a layer, then frees it */
+.essentials-index:not(.is-visible) > * {
+    will-change: opacity, transform;
+}
+
+.essentials-index.is-visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.essentials-index.is-visible > * {
+    transform: translate3d(0, 0, 0);
+}
+
+/* Short stagger: the three parts arrive one after the other without waiting */
+.essentials-index.is-visible > :nth-child(2) { transition-delay: 0.1s; }
+.essentials-index.is-visible > :nth-child(3) { transition-delay: 0.2s; }
+
+.essentials-scrollbar-horizontal {
+    display: none !important;
+}
+
+/* All the slides in the same cell: the box takes the height of the tallest, no jump */
+.essentials-content {
+    flex: 1;
+    display: grid;
+    min-width: 0;
+}
+
+.essentials-slide {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+    visibility: hidden;
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease), visibility var(--duration-reveal) var(--ease);
+}
+
+.essentials-slide.active {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+}
+
+.essentials-slide h3,
+.essentials-slide p {
+    margin: 0;
+    padding: 0;
+    line-height: var(--line-height);
+}
+
+.essentials-slide h3 {
+    padding-bottom: var(--space-5);
+    color: var(--text-color-dark);
+    font-weight: 300;
+}
+
+.essentials-slide h3 mark {
+    background: none;
+    color: var(--text-color-dark);
+    font-weight: 600;
+}
+
+.essentials-images {
+    position: relative;
+    flex-shrink: 0;
+    width: min(100%, 750px);
+    max-width: 750px;
+    aspect-ratio: 1;
+    margin: 0 auto;
+}
+
+.essentials-img {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 12px 24px;
+    opacity: 0;
+    transition: opacity var(--duration-reveal) var(--ease);
+}
+
+.essentials-img.active {
+    opacity: 1;
+}
+
+.essentials-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px 24px;
+}
+
+@media (min-width: 1441px) {
+    .essentials-images {
+        width: 40vw;
+    }
+}
+
+@media (max-width: 1440px) {
+    .essentials-index {
+        flex-direction: column;
+        gap: var(--space-8);
+    }
+
+    .essentials-scrollbar-vertical {
+        display: none !important;
+    }
+
+    .essentials-scrollbar-horizontal {
+        display: flex !important;
+        order: 3;
+    }
+
+    .essentials-images {
+        order: -1;
+        width: 70vw;
+    }
+
+    .essentials-content {
+        order: 2;
+        width: 100%;
+        text-align: center;
+    }
+
+    .essentials-slide h3 {
+        padding-bottom: var(--space-6);
+    }
+}
+
+@media (max-width: 1024px) {
+    .essentials-index {
+        gap: var(--space-6);
+    }
+
+    .essentials-slide h3 {
+        font-size: var(--font-large) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .scrollbar-wrapper.orientation-horizontal {
+        width: 100%;
+        gap: var(--space-7);
+    }
+}

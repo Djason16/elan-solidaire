@@ -1,0 +1,172 @@
+/* Administration (components/views/Admin), as in the original design. No page animation, no loading between tabs. */
+.admin-dashboard {
+    min-height: 30vh;
+    padding: 0 0 var(--space-8);
+}
+
+/* Tabs: pill buttons with their icon; round icon buttons under 1024 px */
+.admin-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--choice-gap);
+    padding: 0 var(--page-gutter) var(--space-8);
+}
+
+.admin-tab {
+    flex: 0 1 auto;
+    white-space: nowrap;
+}
+
+.admin-tab-circle {
+    display: none;
+}
+
+.admin-content {
+    padding: 0 var(--page-gutter);
+    min-height: 20vh;
+}
+
+.admin-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+}
+
+/* Cards of a tab (AdminPanel) */
+.admin-card {
+    gap: var(--card-gap);
+}
+
+.admin-card-title {
+    margin: 0;
+    color: var(--text-color-dark);
+}
+
+.admin-intro {
+    margin: 0;
+    line-height: var(--line-height);
+}
+
+.admin-intro mark,
+.todo-list mark {
+    background: transparent;
+    color: var(--text-color-grey);
+    font-weight: 600;
+}
+
+/* A folding card: its header underlined, as in the original */
+.admin-card-folding {
+    gap: 0;
+}
+
+.admin-card-folding .expandable-header {
+    border-bottom: 1px solid var(--border-grey-50);
+}
+
+.admin-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap);
+    padding-top: var(--card-gap);
+}
+
+/* Search bar and round buttons of a list */
+.admin-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-search {
+    flex: 1 1 300px;
+}
+
+.admin-filter {
+    flex: 0 1 200px;
+}
+
+.admin-toolbar-actions {
+    display: flex;
+}
+
+.admin-count {
+    margin: 0;
+    color: var(--text-color-grey);
+}
+
+.admin-thumb {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 1px solid var(--border-grey-50);
+    border-radius: var(--radius-sm);
+    background: var(--info-box-bg);
+}
+
+.circle-button.circle-danger {
+    color: var(--accent-red);
+}
+
+/* Add and edit forms: fields side by side (1/2, 1/3), stacked on a phone */
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--form-gap);
+}
+
+.admin-form-fields {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--form-gap);
+}
+
+/* A field takes the whole row, half of it or a third: rows are always complete and regular */
+.admin-field-full { grid-column: span 6; }
+.admin-field-half { grid-column: span 3; }
+.admin-field-third { grid-column: span 2; }
+
+/* Phones and narrow windows: one field per row (latitude and longitude one under the other) */
+@media (max-width: 600px) {
+    .admin-field-half,
+    .admin-field-third {
+        grid-column: span 6;
+    }
+}
+
+/* "Actif / Inactif": two buttons side by side at every width, the gap of the other choices */
+.status-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--choice-gap);
+}
+
+.admin-image-field {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--form-gap);
+}
+
+.admin-image-field img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 1px solid var(--border-grey-50);
+    border-radius: var(--radius-sm);
+}
+
+.admin-image-field .field {
+    flex: 1 1 240px;
+}
+
+.admin-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--form-actions-gap);
+}
+
+.admin-form-actions .action-button.full {
+    flex: 1 1 240px;
+    width: auto;
+}

@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Builds (the static site is built in frontend/out/)
+.next/
+.next-*/
+out/
+
+# Settings: only the .env.example files go to Git
+.env
+.env.*
+!.env.example
+
+# Local backups of the project menu (start.bat)
+/backups/
+
+# Logs, systems and editors
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+
+# Local cache of the Cloudflare tool (wrangler)
+.wrangler/

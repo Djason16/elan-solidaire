@@ -1,0 +1,119 @@
+/* Legal pages and bank transfer details (original design) */
+/* Legal pages: numbered sections separated by a thin line */
+.legal-section {
+    padding: 0 var(--page-gutter) var(--space-8);
+}
+
+.legal-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.legal-entry {
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--border-grey-50);
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    transition: opacity var(--duration-reveal) var(--ease) 0.7s, transform var(--duration-reveal) var(--ease) 0.7s;
+}
+
+.legal-entry:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.legal-section.is-visible .legal-entry {
+    opacity: 1;
+    transform: none;
+}
+
+.legal-entry-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: var(--space-3);
+}
+
+.legal-entry-index {
+    min-width: 2rem;
+    color: var(--accent-blue);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+.legal-entry-title {
+    margin: 0;
+    color: var(--text-color-dark);
+}
+
+.legal-entry-content {
+    margin: 0 0 var(--space-4);
+    line-height: var(--line-height);
+}
+
+.legal-entry-content:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 480px) {
+    .legal-section {
+        padding: 0 var(--page-gutter) var(--space-8);
+    }
+
+    .legal-entry-index {
+        min-width: 0;
+    }
+}
+
+/* Bank transfer details */
+.rib-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.rib-item {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border-grey-50);
+}
+
+.rib-item dt {
+    color: var(--text-color-grey);
+    font-weight: 500;
+}
+
+.rib-item dd {
+    margin: 0;
+    color: var(--text-color-dark);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.rib-mono {
+    font-family: ui-monospace, Consolas, monospace;
+    letter-spacing: 0.04em;
+}
+
+.rib-steps {
+    margin: 0;
+    padding-left: var(--space-4);
+    color: var(--text-color-dark);
+    line-height: var(--line-height);
+}
+
+.rib-hint {
+    margin: 0;
+    line-height: var(--line-height);
+}
+
+/* Button at the end of a section (cookie policy: "Gérer les cookies") */
+.legal-entry-action {
+    display: flex;
+    margin: 0;
+    padding-top: var(--space-2);
+}

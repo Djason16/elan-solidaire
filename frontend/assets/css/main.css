@@ -1,0 +1,50 @@
+/* Font of the site (Public Sans) */
+@import "utils/fonts.css";
+
+/* Colors, fonts and sizes of the original design: the whole look of the site changes in utils/variables.css */
+@import "utils/variables.css";
+
+/* Base of the whole site */
+@import "base/global.css";
+
+/* Hidden headings, keyboard focus, touch areas (accessibility of the site) */
+@import "base/accessibility.css";
+
+/* Text size classes (.text-small ... .text-title-large) */
+@import "base/typography.css";
+
+/* Frame of the pages and shared components */
+@import "components/app-shell.css";
+@import "components/header.css";
+@import "components/menu.css";
+@import "components/footer.css";
+@import "components/loader.css";
+@import "components/buttons.css";
+@import "components/forms.css";
+@import "components/form-layout.css";
+@import "components/section-intro.css";
+@import "components/overlays.css";
+@import "components/data-list.css";
+@import "components/preferences-banner.css";
+@import "components/page-hero.css";
+@import "components/demo-tools.css";
+
+/* Hover, focus, pressed and disabled states of every type of element, defined once (after the components) */
+@import "components/states.css";
+
+/* Entries and exits of menus, windows, banners, toasts and panels (motion tokens) */
+@import "components/motion.css";
+
+/* Sections of the pages (components/views): one file per group of pages */
+@import "views/home.css";
+@import "views/support.css";
+@import "views/shop.css";
+@import "views/admin.css";
+@import "views/admin-dashboard.css";
+@import "views/extras.css";
+@import "views/fundraiser.css";
+@import "views/agenda.css";
+@import "views/features.css";
+
+/* Finish: rhythm of the sections, display type, soft depth (after the components and the views) */
+@import "components/finish.css";

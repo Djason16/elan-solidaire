@@ -1,0 +1,30 @@
+/* Top of a page (PageHero): small title, large title, text, buttons */
+.page-hero {
+    display: grid;
+    justify-items: start;
+}
+
+.page-hero-eyebrow {
+    color: var(--accent-blue);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.page-hero h1 {
+    max-width: 22ch;
+    overflow-wrap: break-word;
+}
+
+.page-hero-text {
+    max-width: 60ch;
+}
+
+.page-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.page-hero-actions:empty {
+    display: none;
+}

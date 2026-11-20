@@ -1,0 +1,168 @@
+/*
+ * Entries and exits of the site, with the motion tokens of utils/variables.css (--motion-*, --ease-enter,
+ * --ease-exit). Only transform and opacity move. The exit is a little shorter than the entry; the element stays
+ * mounted meanwhile (composables/usePresence.js adds .is-closing, toasts get .is-leaving).
+ *
+ *   Element            | entry                               | exit
+ *   ------------------ | ----------------------------------- | -----------------------------------
+ *   Menu               | veil fades in, card scales / sheet  | the same, reversed
+ *                      | rises, links slide one after another|
+ *   Windows (dialog)   | scale 0.96 + fade / sheet rises     | the same, reversed (then focus back)
+ *   Cookie banner      | veil fades, card scales / sheet     | the same, reversed
+ *   Photo (lightbox)   | fade + scale                        | fade + scale
+ *   Toasts             | slide from the side (bottom: rise)  | slide out + fade
+ *   Folding blocks     | content slides down + fade          | slides up + fade
+ *   Tab panels         | fade + small rise (key change)      | -
+ *   Admin rows         | fade + small rise                   | fade + shrink (before deletion)
+ */
+
+/* ---------- Keyframes: one entry per movement, the exits play them reversed ---------- */
+@keyframes motion-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes motion-scale {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes motion-rise {
+    from { transform: translateY(100%); }
+    to { transform: none; }
+}
+
+@keyframes motion-drop {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes motion-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes motion-slide-in {
+    from { opacity: 0; transform: translateX(24px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* ---------- Menu ---------- */
+.menu-overlay { animation: motion-fade var(--motion-base) var(--ease-enter) both; }
+.menu-container { animation: motion-scale var(--motion-base) var(--ease-enter) both; }
+.menu-list li { animation: menu-item-in var(--motion-base) var(--ease-enter) forwards; animation-delay: calc(var(--motion-stagger) + var(--item-index) * var(--motion-stagger) * 0.8); }
+
+.menu-overlay.is-closing { animation: motion-fade var(--motion-exit) var(--ease-exit) reverse both; }
+.menu-overlay.is-closing .menu-container { animation: motion-scale var(--motion-exit) var(--ease-exit) reverse both; }
+
+/* ---------- Windows ---------- */
+.modal[open] { animation: motion-scale var(--motion-base) var(--ease-enter) both; }
+.modal[open]::backdrop { animation: motion-fade var(--motion-base) var(--ease-enter) both; }
+
+.modal.is-closing { animation: motion-scale var(--motion-exit) var(--ease-exit) reverse both; }
+.modal.is-closing::backdrop { animation: motion-fade var(--motion-exit) var(--ease-exit) reverse both; }
+
+/* The photo viewer is its own full-screen veil: the veil fades, only the photo scales (a transform on the whole
+   window made the fixed close button follow the photo, then jump to the corner) */
+.lightbox[open] { animation: motion-fade var(--motion-base) var(--ease-enter) both; }
+.lightbox[open] .lightbox-image { animation: motion-scale var(--motion-base) var(--ease-enter) both; }
+
+.lightbox.is-closing { animation: motion-fade var(--motion-exit) var(--ease-exit) reverse both; }
+.lightbox.is-closing .lightbox-image { animation: motion-scale var(--motion-exit) var(--ease-exit) reverse both; }
+
+/* ---------- Cookie banner ---------- */
+.cookie-banner-overlay { animation: motion-fade var(--motion-base) var(--ease-enter) both; }
+.cookie-banner-container { animation: motion-scale var(--motion-base) var(--ease-enter) both; }
+.cookie-banner-overlay.is-closing { animation: motion-fade var(--motion-exit) var(--ease-exit) reverse both; }
+.cookie-banner-overlay.is-closing .cookie-banner-container { animation: motion-scale var(--motion-exit) var(--ease-exit) reverse both; }
+
+/* Phones and tablets: the menu, the windows and the cookie banner are sheets rising from the bottom */
+@media (max-width: 1440px) {
+    .menu-container { animation-name: motion-rise; }
+    .menu-overlay.is-closing .menu-container { animation-name: motion-rise; }
+}
+
+@media (max-width: 768px) {
+    .modal[open],
+    .modal.is-closing,
+    .cookie-banner-container,
+    .cookie-banner-overlay.is-closing .cookie-banner-container { animation-name: motion-rise; }
+}
+
+/* ---------- Toasts ---------- */
+.toast { animation: motion-slide-in var(--motion-base) var(--ease-enter) both; }
+.toast.is-leaving { animation: motion-slide-in var(--motion-exit) var(--ease-exit) reverse both; }
+
+@media (max-width: 768px) {
+    .toast { animation-name: motion-up; }
+    .toast.is-leaving { animation-name: motion-up; }
+}
+
+/* ---------- Folding blocks (questions, cookie details) ---------- */
+/* The height follows the content in both directions (rows 0fr <-> 1fr), the text fades with it, the chevron turns.
+   The inner part cuts what passes while it moves, then lets focus rings and shadows show once open */
+.expandable-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows var(--motion-base) var(--ease-exit), opacity var(--motion-fast) var(--ease-exit);
+}
+
+.expandable-wrapper.is-open > .expandable-content {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition: grid-template-rows var(--motion-base) var(--ease-enter), opacity var(--motion-base) var(--ease-enter);
+}
+
+.expandable-inner {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.expandable-wrapper.is-open > .expandable-content > .expandable-inner {
+    animation: expandable-overflow 1ms linear var(--motion-base) forwards;
+}
+
+@keyframes expandable-overflow {
+    to { overflow: visible; }
+}
+
+.expandable-header .classic-btn .icon {
+    transition: transform var(--motion-base) var(--ease-enter);
+}
+
+.expandable-wrapper.is-open > .expandable-header .classic-btn .icon {
+    transform: rotate(180deg);
+}
+
+/* ---------- Tab panels and admin sections (remounted at each change by their key) ---------- */
+.login-panel,
+.support-card,
+.admin-content { animation: motion-up var(--motion-base) var(--ease-enter) both; }
+
+/* ---------- Rows of the admin lists ---------- */
+.admin-record { animation: motion-up var(--motion-base) var(--ease-enter) both; }
+.admin-record.is-removing { animation: motion-scale var(--motion-exit) var(--ease-exit) reverse both; }
+
+/* ---------- Less motion: a short fade at most, nothing moves ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .menu-container,
+    .menu-list li,
+    .cookie-banner-container,
+    .toast,
+    .expandable-content,
+    .login-panel,
+    .support-card,
+    .admin-content,
+    .admin-record,
+    .modal,
+    .lightbox,
+    .lightbox-image {
+        animation-name: motion-fade !important;
+    }
+
+    .menu-list li {
+        opacity: 1;
+        transform: none;
+    }
+}

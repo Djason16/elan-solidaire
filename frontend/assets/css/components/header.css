@@ -1,0 +1,189 @@
+/* Top of every page (Header), as in the original design */
+.site-header {
+    position: relative;
+    z-index: 1000;
+}
+
+/* Anchors of the page land under the header block */
+:target,
+[id] {
+    scroll-margin-top: calc(var(--header-height, 120px) + var(--space-3));
+}
+
+.header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-7) var(--page-gutter);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    color: var(--text-color-dark);
+    text-decoration: none;
+}
+
+.header-logo img {
+    width: auto;
+    height: 4vh;
+    min-height: 32px;
+}
+
+.header-logo span {
+    color: inherit;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.header-nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-link {
+    color: var(--text-color-dark);
+    text-decoration: none;
+    transition: color var(--fast-transition);
+}
+
+.nav-link.active {
+    color: var(--accent-blue);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .header-logo:hover,
+    .nav-link:hover {
+        color: var(--accent-blue);
+    }
+}
+
+/* Under 1440 px: logo, cart and menu only; the header floats as a pill while scrolling */
+@media (max-width: 1440px) {
+    .header-nav,
+    .header-actions .header-donate {
+        display: none;
+    }
+
+    .header-logo {
+        gap: var(--space-6);
+    }
+
+    .header-logo img {
+        height: 3vh;
+    }
+
+    .header-actions {
+        gap: var(--space-4);
+    }
+
+    /* Banner + header: one block stuck to the top that moves as a whole (only its transform is animated). Sticky keeps
+       its place in the page: nothing to measure, no layout shift when the page loads */
+    .site-header {
+        position: sticky;
+        top: 0;
+        /* The transparent area around the pill never catches a click */
+        pointer-events: none;
+        transform: translateY(0);
+        transition: transform var(--motion-base) var(--ease-enter);
+    }
+
+    .site-header > * {
+        pointer-events: auto;
+    }
+
+    .site-header.is-hidden {
+        transform: translateY(calc(-100% - 2.5vh));
+        transition: transform var(--motion-base) var(--ease-exit);
+    }
+
+    /* Compact header (after scrolling): a floating pill, centered with equal margins, under the banner.
+       The header keeps its size (nothing moves around it): the pill is a layer behind it that fades and scales in,
+       the logo and the buttons slide inside it with a transform. Only opacity and transform are animated. */
+    .header-wrapper {
+        --pill-inset-x: 15vw;
+        --pill-inset-y: var(--space-3);
+        position: relative;
+        isolation: isolate;
+    }
+
+    .header-wrapper::before {
+        content: "";
+        position: absolute;
+        inset: var(--pill-inset-y) var(--pill-inset-x);
+        z-index: -1;
+        border-radius: var(--radius-pill);
+        background: var(--first-color-50);
+        box-shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
+        opacity: 0;
+        transform: scale(1.03);
+        transition: opacity var(--motion-base) var(--ease-enter), transform var(--motion-base) var(--ease-enter);
+        pointer-events: none;
+    }
+
+    .header-logo,
+    .header-actions {
+        transition: transform var(--motion-base) var(--ease-enter);
+    }
+
+    .header-logo {
+        transform-origin: left center;
+    }
+
+    /* The blur is only computed while the pill shows (it costs paint time on a phone) */
+    .header-wrapper.scrolled::before {
+        opacity: 1;
+        transform: none;
+        backdrop-filter: blur(12px);
+    }
+
+    .header-wrapper.scrolled .header-logo {
+        transform: translateX(var(--pill-inset-x)) scale(0.92);
+    }
+
+    .header-wrapper.scrolled .header-actions {
+        transform: translateX(calc(-1 * var(--pill-inset-x))) scale(0.92);
+        transform-origin: right center;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-wrapper {
+        padding: var(--space-6) var(--page-gutter);
+    }
+
+    .header-wrapper {
+        --pill-inset-x: 5vw;
+    }
+
+    .header-actions {
+        gap: var(--space-3);
+    }
+}
+
+/* Short screens (phone held sideways): less space above and below */
+@media (max-height: 480px) {
+    .header-wrapper {
+        padding-block: var(--space-4);
+    }
+
+    .header-wrapper {
+        --pill-inset-y: var(--space-1);
+    }
+}

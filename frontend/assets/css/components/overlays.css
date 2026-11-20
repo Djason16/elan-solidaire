@@ -1,0 +1,275 @@
+/* Windows of the site (Modal, native <dialog>), in the look of the menu and cookie windows of the original design */
+.modal {
+    width: min(100% - 2rem, 600px);
+    max-height: calc(100dvh - 2rem);
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-lg);
+    background: var(--first-color);
+    color: var(--text-color-dark);
+    box-shadow: var(--shadow-overlay);
+    overscroll-behavior: contain;
+}
+
+.modal[open] {
+    animation: modal-pop var(--motion-base) var(--ease-enter);
+}
+
+.modal-small { width: min(100% - 2rem, 460px); }
+.modal-large { width: min(100% - 2rem, 900px); }
+
+.modal::backdrop {
+    background: var(--overlay-bg);
+    backdrop-filter: var(--blur);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* The same inner space as the cards; the title is --form-gap above the first field */
+    padding: var(--card-padding) var(--card-padding) var(--form-gap);
+    background: var(--first-color);
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--text-color-dark);
+    font-weight: 700;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--form-gap);
+    padding: 0 var(--card-padding) var(--card-padding);
+}
+
+.modal-text {
+    margin: 0;
+    color: var(--text-color-grey);
+    line-height: var(--line-height);
+}
+
+.modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.modal-actions .action-button {
+    flex: 1 1 auto;
+}
+
+/* A window whose content scrolls: the right corners are square, the scrollbar runs cleanly along the edge; the left
+   corners stay rounded (class set by composables/useScrollable.js) */
+.modal.is-scrollable {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+@keyframes modal-pop {
+    from { opacity: 0; transform: scale(0.9); }
+}
+
+/* Phones: a sheet rising from the bottom, like the menu and the cookie window */
+@media (max-width: 768px) {
+    .modal {
+        width: 100%;
+        max-width: 100%;
+        max-height: 90dvh;
+        margin: auto 0 0;
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .modal[open] {
+        animation-name: modal-rise;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-height: 480px) {
+    .modal {
+        max-height: 100dvh;
+    }
+
+}
+
+@keyframes modal-rise {
+    from { transform: translateY(100%); }
+}
+
+/* Notifications at the top right (Toasts), in place of the alert() windows of the original */
+.toasts {
+    position: fixed;
+    top: var(--space-4);
+    right: var(--space-4);
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    width: min(100% - 2 * var(--space-4), 380px);
+    /* The empty area of the stack never catches a click */
+    pointer-events: none;
+}
+
+.toast {
+    pointer-events: auto;
+}
+
+/* Phones: at the bottom, above the round buttons of the corners (cookies, back to top: 43 px), newest at the bottom */
+@media (max-width: 768px) {
+    .toasts {
+        top: auto;
+        right: var(--page-gutter);
+        bottom: calc(43px + 2 * var(--space-3));
+        left: var(--page-gutter);
+        width: auto;
+    }
+}
+
+.toast {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--space-4) var(--space-4);
+    border: 2px solid var(--fifth-color-50);
+    border-radius: var(--radius-md);
+    background: var(--first-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.toast p {
+    flex: 1;
+    margin: 0;
+    color: var(--text-color-dark);
+    line-height: var(--line-height-medium);
+}
+
+.toast-icon {
+    margin-top: 0.2em;
+}
+
+.toast-success .toast-icon { color: var(--accent-green-dark); }
+.toast-error .toast-icon { color: var(--accent-red); }
+.toast-info .toast-icon { color: var(--accent-blue); }
+
+.toast-close {
+    display: flex;
+    padding: var(--space-1);
+    border: none;
+    background: none;
+    color: var(--text-color-grey);
+    cursor: pointer;
+}
+
+@keyframes toast-in {
+    from { opacity: 0; transform: translateY(-10px); }
+}
+
+/* Small green label of the demo: "e-mail not sent", "simulated payment" */
+.demo-badge {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    margin: 0;
+    padding: var(--space-1) var(--space-2);
+    border-radius: 4px;
+    background: var(--accent-green-25);
+    color: var(--accent-green-dark);
+}
+
+/* E-mail preview (MailPreview) */
+.mail-preview {
+    display: flex;
+    flex-direction: column;
+}
+
+.mail-preview-headers {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-2) var(--space-4);
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--info-box-bg);
+}
+
+.mail-preview-headers dt {
+    color: var(--text-color-dark);
+    font-weight: 600;
+}
+
+.mail-preview-headers dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.mail-preview-body {
+    margin: 0;
+    color: var(--text-color-grey);
+    line-height: var(--line-height);
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+/* Simulated payment window (PaymentDialog) */
+.payment {
+    gap: var(--space-4);
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--info-box-bg);
+    color: var(--text-color-dark);
+}
+
+.payment-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap);
+}
+
+.payment-row {
+    display: flex;
+}
+
+.payment-row .field {
+    flex: 1;
+}
+
+.payment-info {
+    display: flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--info-box-bg);
+    color: var(--text-color-dark);
+}
+
+.payment-info p {
+    margin: 0;
+    line-height: var(--line-height-medium);
+}
+
+@media (max-width: 360px) {
+    .payment-row {
+        flex-direction: column;
+    }
+}

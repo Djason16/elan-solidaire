@@ -1,0 +1,175 @@
+/* Menu opened by the round menu button (HeaderMenu), split from header.css */
+
+/* Menu (HeaderMenu): centered card on a large screen */
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--overlay-bg);
+    backdrop-filter: var(--blur);
+    animation: menu-fade var(--motion-base) var(--ease-enter);
+}
+
+.menu-container {
+    width: min(400px, 85vw);
+    animation: menu-pop var(--motion-base) var(--ease-enter);
+}
+
+.menu {
+    max-height: 100dvh;
+    overflow-y: auto;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--menu-bg);
+    box-shadow: var(--shadow-overlay);
+}
+
+.menu-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.menu-list li {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: menu-item-in var(--motion-base) var(--ease-enter) forwards;
+    /* Short cascade: the last links (Connexion, Admin) must not wait; every link is in place in under a second */
+    animation-delay: calc(80ms + var(--item-index) * 45ms);
+}
+
+/* The main links are already in the bar of a large screen */
+@media (min-width: 1441px) {
+    .menu-main-link {
+        display: none;
+    }
+
+    /* Only the account links show here: they cascade from the first one, not after the hidden main links */
+    .menu-list li {
+        animation-delay: calc(80ms + var(--account-index, 0) * 45ms);
+    }
+}
+
+.menu-link {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--space-3) 0;
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-md);
+    color: var(--text-color-dark);
+    text-decoration: none;
+    transition: var(--transition-global);
+}
+
+.menu-link::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-md);
+    background: linear-gradient(90deg, rgba(0, 123, 255, 0.1), rgba(0, 123, 255, 0.05));
+    /* Grows from the left with a transform (no animated width) */
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--fast-transition);
+}
+
+.menu-link.active {
+    color: var(--accent-blue);
+    background: var(--active-bg);
+}
+
+.menu-link .arrow {
+    opacity: 0;
+    transition: var(--transition-global);
+}
+
+.menu-link .link-text {
+    transition: transform var(--fast-transition);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .menu-link:hover {
+        color: var(--accent-blue);
+        background: var(--hover-bg);
+    }
+
+    .menu-link:hover::before {
+        transform: scaleX(1);
+    }
+
+    .menu-link:hover .arrow {
+        opacity: 1;
+    }
+
+    .menu-link:hover .link-text {
+        transform: translateX(4px);
+    }
+}
+
+/* Under 1440 px: a sheet rising from the bottom, with every link */
+@media (max-width: 1440px) {
+    .menu-overlay {
+        align-items: flex-end;
+    }
+
+    .menu-container {
+        width: 100vw;
+        animation-name: menu-rise;
+    }
+
+    .menu {
+        max-height: 80dvh;
+        padding: var(--space-6) var(--space-5);
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .menu-list li {
+        transform: translateY(20px);
+    }
+
+    .menu-link {
+        margin: 0;
+        padding: var(--space-4) var(--space-4);
+    }
+}
+
+@media (max-height: 480px) {
+    .menu {
+        max-height: 100dvh;
+        padding: var(--space-4);
+    }
+
+    .menu-link {
+        padding: var(--space-2) var(--space-4);
+    }
+}
+
+@keyframes menu-fade {
+    from { opacity: 0; }
+}
+
+@keyframes menu-pop {
+    from { transform: scale(0.9); }
+}
+
+@keyframes menu-rise {
+    from { transform: translateY(100%); }
+}
+
+@keyframes menu-item-in {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}

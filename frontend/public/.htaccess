@@ -1,0 +1,61 @@
+# A folder without index page is never listed (« Index of / »: every file of the site shown to anyone, and to Google)
+Options -Indexes
+
+RewriteEngine On
+
+# Settings files (.env*) are never served: a site without a build is uploaded as it is
+<FilesMatch "^\.env">
+    Require all denied
+</FilesMatch>
+
+# Force HTTPS for every request
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Redirect www to the address without www
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+# Force trailing slash only if not a file or folder (static export uses page/index.html)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [L,R=301]
+
+# Unknown pages
+ErrorDocument 404 /404.html
+
+#####################################
+# Security headers on every response: no guessing of the file type, never shown inside a frame of another site,
+# referrer reduced to the domain, HTTPS enforced for one year (HSTS, only on an HTTPS response)
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
+    Header always unset X-Powered-By
+</IfModule>
+
+#####################################
+# Cache rules
+<IfModule mod_headers.c>
+    # Images and fonts of public/: kept 30 days by the browser (pages load faster on the next visit)
+    <FilesMatch "\.(png|jpg|jpeg|gif|webp|avif|ico|svg|woff|woff2|ttf|otf|mp4|webm)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+
+    # Pages, scripts and styles: checked again at each visit (the latest version, and the back button stays instant).
+    # The files of the build with a hash in their name are kept a year: .htaccess of their folder (_nuxt/, assets/...)
+    <FilesMatch "\.(js|mjs|css|html|json|xml|txt|webmanifest)$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+</IfModule>
+
+# Files of the build (Next.js: /_next/static/, no .htaccess allowed in public/_next): their name changes with their
+# content (hash), so the browser keeps them a year without asking again
+<IfModule mod_setenvif.c>
+    SetEnvIf Request_URI "/_next/static/" HASHED_BUILD_FILE
+</IfModule>
+<IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=31536000, immutable" env=HASHED_BUILD_FILE
+</IfModule>

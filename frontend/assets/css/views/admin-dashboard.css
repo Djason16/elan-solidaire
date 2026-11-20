@@ -1,0 +1,119 @@
+/* Dashboard and lists of the admin (split from admin.css) */
+
+/* Dashboard */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: var(--grid-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.admin-stat-value {
+    color: var(--text-color-dark);
+}
+
+.todo-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-8);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Bar chart of the last 12 months: shop sales at the bottom, donations on top */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+.chart-legend span::before {
+    content: "";
+    display: inline-block;
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-right: var(--space-1);
+    border-radius: 2px;
+    vertical-align: -0.1rem;
+}
+
+.legend-donations::before { background-color: var(--third-color); }
+.legend-orders::before { background-color: var(--accent-green); }
+
+.bar-chart {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    height: 12rem;
+}
+
+.bar-chart-column {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-width: 0;
+}
+
+.bar-chart-stack {
+    display: flex;
+    flex-direction: column-reverse;
+    border-bottom: 1px solid var(--fifth-color-50);
+}
+
+.bar {
+    display: block;
+    width: 100%;
+}
+
+.bar-donations {
+    border-radius: 3px 3px 0 0;
+    background-color: var(--third-color);
+}
+
+.bar-orders {
+    order: -1;
+    background-color: var(--accent-green);
+}
+
+.bar-chart-label {
+    overflow: hidden;
+    color: var(--text-color-grey);
+    text-align: center;
+    white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+    .admin-tabs {
+        justify-content: center;
+        padding: 0 var(--page-gutter) var(--space-8);
+    }
+
+    .admin-tab {
+        display: none;
+    }
+
+    .admin-tab-circle {
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-dashboard {
+        padding: 0 0 var(--space-8);
+    }
+
+    .admin-tabs {
+        padding: 0 var(--page-gutter) var(--space-7);
+    }
+
+    .admin-filter {
+        flex: 1 1 100%;
+    }
+
+    .bar-chart-label {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        justify-self: center;
+    }
+}

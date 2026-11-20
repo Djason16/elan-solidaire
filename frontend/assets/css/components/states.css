@@ -1,0 +1,196 @@
+/*
+ * Interaction states of the whole site, defined ONCE per type of element, with the tokens of utils/variables.css
+ * (--state-*). The files of the components only give the colors of their rest state.
+ *
+ *   Type        | hover (mouse only)                 | focus-visible        | active (pressed)     | disabled
+ *   ----------- | ---------------------------------- | -------------------- | -------------------- | -----------------
+ *   Buttons     | rises, shadow, hover color         | focus ring           | back down, 0.97      | faded, not-allowed
+ *   Small round | light blue (.classic-btn, buttons.css) | focus ring       | back down, 0.97      | faded, not-allowed
+ *   Links       | link hover color + light band      | focus ring           | darker color         | -
+ *   Fields      | blue border                        | blue border + halo   | -                    | faded, not-allowed
+ *   Choices     | blue border on the box / the pill  | ring on the box      | -                    | faded, not-allowed
+ *   Cards       | rise, larger shadow                | ring (the link)      | -                    | -
+ *
+ * Hover only exists with a mouse: @media (hover: hover) and (pointer: fine). On a touch screen, a tap never leaves a
+ * stuck hover state. With prefers-reduced-motion, nothing moves (colors only).
+ */
+
+/* ---------- Buttons: BaseButton, CircleButton, round icon buttons, carousel arrows, file button ---------- */
+.action-button,
+.circle-button,
+.round-icon-button,
+.scrollbar-button,
+.file-button {
+    transition: var(--transition-global);
+}
+
+.action-button:disabled,
+.circle-button:disabled,
+.round-icon-button:disabled,
+.scrollbar-button:disabled,
+.action-button[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: var(--state-disabled-opacity);
+    transform: none;
+    box-shadow: none;
+}
+
+/* Pressed state: with a mouse only, like the hover. On a touch screen a tap shows no hover-like effect at all */
+@media (hover: hover) and (pointer: fine) {
+    .action-button:not(:disabled):active,
+    .circle-button:not(:disabled):active,
+    .round-icon-button:not(:disabled):active,
+    .scrollbar-button:not(:disabled):active {
+        transform: var(--state-active-transform);
+        box-shadow: none;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .action-button:not(:disabled):not(.ghost):hover,
+    .circle-button:not(:disabled):hover,
+    .file-input:not(:disabled):hover + .file-button {
+        transform: var(--state-hover-transform);
+        box-shadow: var(--state-hover-shadow);
+    }
+
+    /* The selected choice (current page, current tab) also answers the mouse, with its own blue */
+    .action-button.primary[aria-current="page"]:hover,
+    .action-button[aria-selected="true"]:hover {
+        background: var(--gradient-btn-primary-hover);
+    }
+}
+
+/* ---------- Links: text links, menu, footer, product names ---------- */
+.text-link,
+.legal-link,
+.footer-nav-link,
+.footer-bottom a,
+.item-name-link,
+.action-button.ghost {
+    border-radius: var(--radius-sm);
+    transition: var(--transition-global);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    /* Color only, no underline, no band: the color comes from --link-hover-color (set by dark areas like the footer) */
+    .text-link:hover,
+    .legal-link:hover,
+    .footer-nav-link:hover,
+    .footer-bottom a:hover,
+    .action-button.ghost:not(:disabled):hover {
+        color: var(--link-hover-color, var(--state-link-hover));
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .text-link:active,
+    .legal-link:active,
+    .footer-nav-link:active {
+        color: var(--state-link-active);
+    }
+}
+
+/* ---------- Fields: text, e-mail, number, select, textarea ---------- */
+.input-type,
+.message-type {
+    transition: border-color var(--duration-hover) var(--ease), box-shadow var(--duration-hover) var(--ease);
+}
+
+.input-type:disabled,
+.message-type:disabled {
+    cursor: not-allowed;
+    opacity: var(--state-disabled-opacity);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .input-type:not(:disabled):not(:focus):hover,
+    .message-type:not(:disabled):not(:focus):hover {
+        border-color: var(--state-field-hover-border);
+    }
+}
+
+.input-type:focus-visible,
+.message-type:focus-visible {
+    border-color: var(--accent-blue);
+    box-shadow: var(--state-field-focus-halo);
+}
+
+/* ---------- Choices: check boxes, radio buttons, sizes ---------- */
+@media (hover: hover) and (pointer: fine) {
+    .checkbox-field:not(.disabled):hover .checkbox-custom,
+    .radio-item:hover input:not(:disabled),
+    .size-option:not(.is-disabled):hover {
+        border-color: var(--state-field-hover-border);
+        box-shadow: var(--state-field-focus-halo);
+    }
+}
+
+.checkbox-field.disabled,
+.size-option.is-disabled {
+    cursor: not-allowed;
+    opacity: var(--state-disabled-opacity);
+}
+
+/* ---------- Cards that are links (products, photos, contact cards) ---------- */
+@media (hover: hover) and (pointer: fine) {
+    .contact-card:hover,
+    .product-card:hover {
+        transform: var(--state-card-hover-transform);
+        box-shadow: var(--state-card-hover-shadow);
+    }
+}
+
+/* ---------- Less motion: the states keep their colors, nothing moves ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .action-button,
+    .circle-button,
+    .round-icon-button,
+    .scrollbar-button,
+    .file-button,
+    .contact-card,
+    .product-card {
+        transform: none !important;
+    }
+}
+
+/* ---------- Current page: the same active style for every navigation link of the site ----------
+   (header, menu, footer, admin sections, member space): the blue of the main menu. aria-current="page" drives it. */
+.nav-link[aria-current="page"],
+.menu-link[aria-current="page"],
+.text-link[aria-current="page"] {
+    color: var(--accent-blue);
+}
+
+/* In the dark footer the active link takes the hover color of the footer (lime), marked by its weight too */
+.footer-nav-link[aria-current="page"],
+.legal-link[aria-current="page"] {
+    color: var(--link-hover-color);
+    font-weight: 700;
+}
+
+/* The current link of the footer also answers the mouse: white on the dark footer */
+@media (hover: hover) and (pointer: fine) {
+    .footer-nav-link[aria-current="page"]:hover,
+    .legal-link[aria-current="page"]:hover {
+        color: var(--text-color-light);
+    }
+
+    /* Links of the breadcrumb: the link color of the site */
+    .breadcrumb a:hover {
+        color: var(--state-link-hover);
+    }
+
+    /* Photos that open large: the picture comes slightly closer */
+    .media-button:hover img {
+        transform: scale(1.05);
+    }
+}
+
+.media-button img {
+    transition: transform var(--motion-base) var(--ease-enter);
+}
+
+.breadcrumb a {
+    transition: var(--transition-global);
+}

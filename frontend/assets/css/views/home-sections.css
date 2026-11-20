@@ -1,0 +1,282 @@
+/* Lower sections of the home page: map, daily actions, newsletter card, questions */
+
+/* Map: full width, 70 % of the screen high (400 px on a phone) */
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    min-height: 260px;
+    overflow: hidden;
+    background: #e5e5e5;
+}
+
+.map-container > * {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+.map-container.is-visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.map-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.map-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: 0;
+}
+
+.map-search {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 999;
+    width: min(320px, calc(100% - 70px));
+}
+
+/* Pin and popup of the original design */
+.map-pin {
+    background: none;
+    border: none;
+}
+
+/* Popup: the card of the site. ".leaflet-container" wins over leaflet.css, loaded after the site styles, whose
+   own content margin (13 px 24 px) doubled the space around the text */
+.leaflet-container .leaflet-popup-content-wrapper {
+    padding: 0;
+    border-radius: var(--radius-md);
+    background: var(--first-color);
+    box-shadow: var(--shadow-card), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.leaflet-container .leaflet-popup-content {
+    width: auto !important;
+    margin: 0;
+    font-family: var(--font-primary);
+    line-height: var(--line-height-medium);
+}
+
+.leaflet-container .leaflet-popup-content > * {
+    margin: 0;
+}
+
+.leaflet-container .leaflet-popup-tip {
+    box-shadow: none;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    /* Never wider than a 320 px screen (the map is the width of the page) */
+    width: min(260px, 72vw);
+    padding: var(--space-4);
+}
+
+.popup-content p {
+    margin: 0;
+}
+
+.popup-city {
+    margin: 0;
+    color: var(--text-color-dark);
+}
+
+.popup-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--fifth-color) 20%, var(--fifth-color) 80%, transparent);
+}
+
+.popup-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+}
+
+.popup-label {
+    color: var(--text-color-grey);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.popup-value {
+    color: var(--text-color-dark);
+}
+
+.popup-info.highlight { background: rgba(31, 116, 171, 0.1); }
+.popup-info.highlight .popup-value { color: var(--accent-blue); }
+.popup-info.highlight-children { background: rgba(52, 211, 153, 0.12); }
+.popup-info.highlight-children .popup-value { color: #0f7a55; }
+
+/* Before the consent: still picture and a button */
+.map-consent {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.map-consent-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+}
+
+.map-consent-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: min(26rem, calc(100% - 2rem));
+    padding: var(--space-5);
+    border-radius: var(--radius-md);
+    background: var(--first-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.map-consent-box p {
+    margin: 0;
+    line-height: var(--line-height-medium);
+}
+
+@media (max-width: 768px) {
+    .map-container {
+        height: 400px;
+    }
+}
+
+@media (max-height: 480px) {
+    .map-container {
+        height: 90vh;
+    }
+}
+
+/* Daily actions: lines between thin grey rules, green square icons */
+.actions-index {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0 calc(var(--page-gutter) * 2);
+    list-style: none;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--border-grey-50);
+}
+
+.action:first-child {
+    border-top: 1px solid var(--border-grey-50);
+}
+
+.action > * {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+    transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
+}
+
+.action.is-visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.action.is-visible > :nth-child(1) { transition-delay: 0.0s; }
+.action.is-visible > :nth-child(2) { transition-delay: 0.1s; }
+
+.action-title {
+    flex: 1.5;
+    margin: 0;
+    color: var(--text-color-dark);
+}
+
+.action-content {
+    flex: 1.5;
+    display: flex;
+    align-items: center;
+}
+
+.action-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 125px;
+    height: 125px;
+    border-radius: 12px 24px;
+    background: var(--accent-green);
+    color: var(--text-color-dark);
+    font-size: 3.5rem;
+}
+
+.action-description {
+    margin: 0;
+    line-height: var(--line-height);
+}
+
+.action-description mark {
+    color: var(--text-color-grey);
+}
+
+@media (max-width: 1440px) {
+    .actions-index {
+        padding: 0 calc(var(--page-gutter) * 2);
+    }
+}
+
+@media (max-width: 1024px) {
+    .actions-index {
+        padding: 0 calc(var(--page-gutter) * 2);
+    }
+
+    .action {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .action-title {
+        width: 100%;
+        margin-bottom: var(--space-4);
+        font-size: var(--font-normal) !important;
+    }
+
+    .action-content {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .action-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .action-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: var(--radius-md);
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .actions-index {
+        padding: 0 calc(var(--page-gutter) * 2);
+    }
+}

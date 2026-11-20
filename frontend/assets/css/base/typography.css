@@ -1,0 +1,67 @@
+/*
+ * Text size classes of the original design (.text-small ... .text-title-large), larger on very large screens and
+ * smaller on phones. The headings (.text-xlarge and up) are fluid (clamp() in variables.css): no jump between widths,
+ * never too large on a phone. Change for the legibility rules: a text never goes under 12 px (max(0.75rem, ...)).
+ */
+.text-smaller { font-size: var(--font-smaller) !important; }
+.text-small { font-size: var(--font-small) !important; }
+.text-normal { font-size: var(--font-normal) !important; }
+.text-large { font-size: var(--font-large) !important; }
+.text-xlarge { font-size: var(--font-xlarge) !important; }
+.text-xxlarge { font-size: var(--font-xxlarge) !important; }
+.text-tall { font-size: var(--font-tall) !important; }
+.text-taller { font-size: var(--font-taller) !important; }
+.text-title { font-size: var(--font-title) !important; }
+.text-title-large { font-size: var(--font-title-large) !important; }
+
+.text-light { font-weight: 300 !important; }
+.text-regular { font-weight: 400 !important; }
+.text-medium { font-weight: 500 !important; }
+.text-semibold { font-weight: 600 !important; }
+.text-bold { font-weight: 700 !important; }
+.text-extrabold { font-weight: 800 !important; }
+.text-black { font-weight: 900 !important; }
+.text-uppercase { text-transform: uppercase; }
+.text-lowercase { text-transform: lowercase !important; }
+.text-center { text-align: center; }
+.text-muted { color: var(--text-color-grey); }
+
+/* Long texts: about 80 characters per line at most */
+.text-long {
+    max-width: 75ch;
+}
+
+/* Link inside a text: blue and underlined */
+.text-link {
+    color: var(--accent-blue);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+@media (min-width: 2560px) {
+    .text-smaller { font-size: calc(var(--font-smaller) + 0.3rem) !important; }
+    .text-small { font-size: calc(var(--font-small) + 0.3rem) !important; }
+    .text-normal { font-size: calc(var(--font-normal) + 0.4rem) !important; }
+    .text-large { font-size: calc(var(--font-large) + 0.4rem) !important; }
+    .text-xlarge { font-size: calc(var(--font-xlarge) + 0.5rem) !important; }
+    .text-xxlarge { font-size: calc(var(--font-xxlarge) + 0.6rem) !important; }
+    .text-tall { font-size: calc(var(--font-tall) + 0.7rem) !important; }
+    .text-taller { font-size: calc(var(--font-taller) + 0.8rem) !important; }
+    .text-title { font-size: calc(var(--font-title) + 1rem) !important; }
+    .text-title-large { font-size: calc(var(--font-title-large) + 1.2rem) !important; }
+}
+
+@media (max-width: 768px) {
+    .text-smaller { font-size: max(0.75rem, calc(var(--font-smaller) - 0.1rem)) !important; }
+    .text-small { font-size: max(0.75rem, calc(var(--font-small) - 0.1rem)) !important; }
+    .text-normal { font-size: calc(var(--font-normal) - 0.1rem) !important; }
+    .text-large { font-size: calc(var(--font-large) - 0.1rem) !important; }
+}
+
+@media (max-width: 480px) {
+    .text-smaller { font-size: 0.75rem !important; }
+    .text-small { font-size: 0.75rem !important; }
+    .text-normal { font-size: calc(var(--font-normal) - 0.2rem) !important; }
+    .text-large { font-size: calc(var(--font-large) - 0.2rem) !important; }
+}
+

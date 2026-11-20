@@ -1,0 +1,244 @@
+/* Product page (components/views/Product), styles of the original design */
+.product-page { min-height: 40vh; padding: var(--space-7) var(--page-gutter) var(--space-8); }
+
+.product-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-6) var(--space-4);
+}
+
+/* Breadcrumb, layout and table rise into view one after the other. The top of the page is never hidden while it waits
+   (the product photo is the largest element of the page, shown at once); the table further down also fades in */
+.breadcrumb-wrapper,
+.layout-wrapper,
+.info-wrapper {
+    transform: translateY(var(--space-3));
+    transition: opacity var(--motion-slow) var(--ease-enter), transform var(--motion-slow) var(--ease-enter);
+}
+
+.info-wrapper { opacity: 0; }
+
+.product-content.is-visible .breadcrumb-wrapper { transform: none; }
+.product-content.is-visible .layout-wrapper { transform: none; transition-delay: 0.03s; }
+.product-content.is-visible .info-wrapper { opacity: 1; transform: none; transition-delay: 0.06s; }
+
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.breadcrumb a { color: var(--text-color-grey); }
+
+.breadcrumb .separator { color: var(--text-color-grey); }
+
+.breadcrumb .current { color: var(--text-color-dark); font-weight: 500; }
+
+.product-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+}
+
+.gallery-section { position: sticky; top: 100px; }
+
+.main-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--fifth-color-50);
+}
+
+.main-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-section { line-height: var(--line-height-medium); }
+
+.product-header { margin: 0 0 var(--space-6); }
+
+.product-title {
+    margin: 0 0 var(--space-5);
+    color: var(--text-color-dark);
+    letter-spacing: -0.5px;
+}
+
+.product-price {
+    margin: 0;
+    color: var(--text-color-grey);
+}
+
+.product-description {
+    margin: 0 0 var(--space-6);
+    color: var(--text-color-grey);
+    line-height: var(--line-height);
+}
+
+.stock-status {
+    display: flex;
+    align-items: center;
+    margin: 0 0 var(--space-6);
+}
+
+.stock-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.stock-status.in-stock { color: var(--accent-green-dark); }
+.stock-status.low-stock { color: #8A6100; }
+.stock-status.out-of-stock { color: var(--accent-red); }
+
+.category-badge { margin: 0 0 var(--space-6); }
+
+.category-badge span {
+    display: inline-block;
+    padding: var(--space-1) var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--btn-light-bg);
+    color: var(--text-color-grey);
+    font-weight: 600;
+}
+
+/* Quantity and "Ajouter au panier" */
+/* Purchase block: the rule of the forms (one column, --form-gap between size, quantity and the button, no margin
+   inside); the block itself is separated from the rest of the column like a section of the card */
+.product-buy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--form-gap);
+    margin: 0 0 var(--space-6);
+}
+
+.product-buy > * {
+    margin: 0;
+}
+
+/* Quantity: − / + buttons and the field at the height of the fields */
+.quantity-section .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--choice-gap);
+}
+
+.quantity-controls .round-icon-button {
+    width: var(--field-height);
+    height: var(--field-height);
+    font-size: 14px;
+}
+
+.qty-input {
+    width: 88px;
+    min-height: var(--field-height);
+    text-align: center;
+}
+
+.legal-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.legal-item {
+    display: flex;
+    align-items: center;
+    color: var(--text-color-grey);
+}
+
+.legal-item .icon { color: var(--accent-green-dark); }
+
+/* "Informations complémentaires": label and value rows */
+.product-more-info {
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-grey-50);
+}
+
+.more-info-title {
+    margin: 0 0 var(--space-6);
+    color: var(--text-color-dark);
+}
+
+.info-table {
+    /* One grid for every row (subgrid): the label column takes the width of the longest label, the value the rest;
+       the corners are cut by the radius of the rows, never by an overflow */
+    display: grid;
+    grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+    margin: 0;
+    border: 1px solid var(--border-grey-50);
+    border-radius: 8px;
+}
+
+.info-row {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    border-bottom: 1px solid var(--border-grey-50);
+}
+
+.info-row:first-child .info-label { border-top-left-radius: 7px; }
+.info-row:last-child .info-label { border-bottom-left-radius: 7px; }
+
+.info-label,
+.info-value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.info-row:last-child { border-bottom: none; }
+
+.info-label {
+    padding: var(--space-4) var(--space-5);
+    border-right: 1px solid var(--border-grey-50);
+    background: var(--btn-light-bg);
+    color: var(--text-color-dark);
+}
+
+.info-value {
+    margin: 0;
+    padding: var(--space-4) var(--space-5);
+    color: var(--text-color-dark);
+}
+
+@media (max-width: 1024px) {
+    .product-page { padding: 0 var(--page-gutter) var(--space-8); }
+
+    .product-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+
+    .gallery-section { position: relative; top: 0; }
+}
+
+@media (max-width: 768px) {
+    .product-content { padding: var(--space-4) 0; }
+
+    .breadcrumb { margin-bottom: var(--space-5); }
+
+    .product-layout { gap: var(--space-6); }
+
+    .product-more-info { margin-top: var(--space-7); padding-top: var(--space-7); }
+
+    /* Phones: the label above its value */
+    .info-table { grid-template-columns: minmax(0, 1fr); }
+    .info-row:first-child .info-label { border-top-right-radius: 7px; }
+    .info-row:last-child .info-label { border-bottom-left-radius: 0; }
+
+    .info-label {
+        padding: var(--space-4) var(--space-4);
+        border-right: none;
+        border-bottom: 1px solid var(--border-grey-50);
+    }
+
+    .info-value { padding: var(--space-4) var(--space-4); }
+}
+
+@media (max-width: 480px) {
+    .product-page { padding: 0 var(--page-gutter) var(--space-8); }
+}

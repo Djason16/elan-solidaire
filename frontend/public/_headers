@@ -1,0 +1,25 @@
+# Headers of Cloudflare Pages (the .htaccess next to this file is for an Apache host instead)
+# Security headers on every response. scripts/csp.mjs replaces 'unsafe-inline' of script-src by the SHA-256 of the
+# inline scripts of the built pages (out/_headers): only those scripts and the files of the site can run.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.tile.openstreetmap.org; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; manifest-src 'self'; base-uri 'self'; form-action 'self'
+
+# Files of the build: their name changes with their content, kept a year
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fonts and illustrations: kept 30 days
+/fonts/*
+  Cache-Control: public, max-age=2592000
+/images/*
+  Cache-Control: public, max-age=2592000
+
+# Private pages: never indexed
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+/account/*
+  X-Robots-Tag: noindex, nofollow
